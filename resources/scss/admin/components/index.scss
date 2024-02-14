@@ -1,0 +1,20 @@
+@import './aside';
+@import './header';
+
+.admin {
+    &-wrapper {
+        display: flex;
+        min-height: 100vh;
+
+        &__content {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        &__main {
+            background-color: var(--color-grey-light);
+            flex-grow: 1;
+        }
+    }
+}
