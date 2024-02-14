@@ -1,2 +1,26 @@
-.aside {
+.admin-aside {
+    background-color: rgb(var(--color-white));
+    position: relative;
+    z-index: 1;
+
+    // a {
+    //     color: #fff;
+    // }
+
+    &-top {
+        background-color: rgb(var(--color-blue-light));
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        height: 56px;
+    }
+
+    &__nav {
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+        padding: 0 20px;
+    }
 }

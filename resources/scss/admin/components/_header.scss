@@ -1,5 +1,25 @@
 .admin-header {
+    background-color: rgb(var(--color-blue-light));
+    box-shadow: 0 4px 8px 0px rgba(var(--color-grey), 0.25);
     display: flex;
+    justify-content: flex-end;
     column-gap: 20px;
-    padding: 12px 0;
+    padding: 12px 20px;
+    position: sticky;
+    top: 0;
+
+    &__icon {
+        display: flex;
+
+        &:hover {
+            .svg-fill,
+            .svt-stroke {
+                opacity: 0.75;
+            }
+        }
+
+        &:active {
+            transform: scale(1.05);
+        }
+    }
 }

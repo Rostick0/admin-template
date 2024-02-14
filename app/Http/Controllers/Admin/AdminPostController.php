@@ -24,7 +24,7 @@ class AdminPostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        return (new PostController)->store($request, '');
+        return (new PostController)->store($request, 'admin.posts.edit');
     }
 
     public function edit(int $id)
@@ -39,6 +39,6 @@ class AdminPostController extends Controller
 
     public function destroy(int $id)
     {
-        return (new PostController)->destroy($id, '');
+        return (new PostController)->destroy($id, 'admin.posts.index');
     }
 }

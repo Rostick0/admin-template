@@ -13,8 +13,9 @@
         }
 
         &__main {
-            background-color: var(--color-grey-light);
+            background-color: rgb(var(--color-grey-light));
             flex-grow: 1;
+            overflow: auto;
         }
     }
 }

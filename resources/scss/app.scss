@@ -1,6 +1,11 @@
-@import './reset';
-@import './root';
-@import './components/';
+@import "./reset";
+@import "./root";
+@import "./components/";
+
+.svg-fill,
+.svg-stroke {
+    transition: .3s;
+}
 
 .wrapper {
     display: flex;

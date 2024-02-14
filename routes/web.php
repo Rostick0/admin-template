@@ -24,6 +24,6 @@ Route::resource('posts', ClientPostController::class);
 Route::prefix('admin')
     ->name('admin.')
     ->group(function () {
-        Route::view('admin', 'pages.admin.index')->name('index');
+        Route::view('', 'pages.admin.index')->name('index');
         Route::resource('posts', AdminPostController::class)->except(['show']);
     });

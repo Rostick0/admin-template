@@ -24,7 +24,7 @@ class ClientPostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        return (new PostController)->store($request, '');
+        return (new PostController)->store($request, 'posts.edit');
     }
 
     public function show(int $id)
@@ -44,6 +44,6 @@ class ClientPostController extends Controller
 
     public function destroy(int $id)
     {
-        return (new PostController)->destroy($id, '');
+        return (new PostController)->destroy($id, 'posts.index');
     }
 }
