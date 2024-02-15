@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminPostController;
+use App\Http\Controllers\Admin\AdminRubricController;
 use App\Http\Controllers\Client\ClientPostController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +27,5 @@ Route::prefix('admin')
     ->group(function () {
         Route::view('', 'pages.admin.index')->name('index');
         Route::resource('posts', AdminPostController::class)->except(['show']);
+        Route::resource('rubrics', AdminRubricController::class)->except(['show']);
     });

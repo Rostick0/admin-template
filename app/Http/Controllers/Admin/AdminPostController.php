@@ -14,7 +14,7 @@ class AdminPostController extends Controller
 {
     public function index(Request $request)
     {
-        return (new PostController)->index($request, 'pages.admin.post.create');
+        return (new PostController)->index($request, 'pages.admin.post.index');
     }
 
     public function create()

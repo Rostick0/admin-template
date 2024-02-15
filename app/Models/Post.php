@@ -4,8 +4,40 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Post extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'content',
+        'user_id',
+        'rubric_id',
+        'source',
+        'count_view',
+        'date_publication',
+    ];
+
+    public function files(): MorphMany
+    {
+        return $this->morphMany(FileRelationship::class, 'file_relable');
+    }
+
+    public function images(): MorphMany
+    {
+        return $this->morphMany(ImageRelat::class, 'image_relatsable');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function rubric(): BelongsTo
+    {
+        return $this->belongsTo(Rubric::class, 'rubric_id', 'id');
+    }
 }
