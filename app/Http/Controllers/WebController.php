@@ -14,23 +14,21 @@ class WebController extends Controller
     protected $name_data = 'data';
     protected $is_auth_id = false;
 
-    public function __construct(Model $model){
+    public function __construct(Model $model)
+    {
         $this->model = $model;
     }
 
     protected static function extendsMutation($data, $request)
     {
-        
     }
 
     protected static function getWhere()
     {
-        $where = [];
-
-        return $where;
+        return [];
     }
 
-    public function index(Request $request, $view)
+    public function index(Request $request, string $view)
     {
         return view($view, [
             $this->name_datas => Filter::all($request, $this->model, [], $this::getWhere())
@@ -42,7 +40,7 @@ class WebController extends Controller
         return view($view);
     }
 
-    public function store(Request $request, $route_name)
+    public function store(Request $request, string $route_name)
     {
         $create_data = [
             ...$request->validated(),
@@ -50,10 +48,7 @@ class WebController extends Controller
 
         if ($this->is_auth_id) $create_data['user_id'] = auth()->id();
 
-        $data = $this->model::create([
-            ...$request->validated(),
-            'user_id' => auth()->id()
-        ]);
+        $data = $this->model::create($create_data);
 
         $this::extendsMutation($data, $request);
 
@@ -62,7 +57,7 @@ class WebController extends Controller
         ])->with('success', '');
     }
 
-    public function show(int $id, $view)
+    public function show(int $id, string $view)
     {
         return view($view, [
             $this->name_data => $this->model::findOrFail($id)
@@ -89,14 +84,14 @@ class WebController extends Controller
         return redirect()->back()->with('success', 'Успешно изменено');
     }
 
-    public function destroy(int $id, $route_name)
+    public function destroy(int $id, string $route_name, array $params = [])
     {
-        $post = $this->model::findOrFail($id);
+        $data = $this->model::findOrFail($id);
 
-        if (AccessUtil::cannot('delete', $post)) return AccessUtil::errorMessage();
+        if (AccessUtil::cannot('delete', $data)) return AccessUtil::errorMessage();
 
         $this->model::destroy($id);
 
-        return redirect()->route($route_name)->with('success', 'Успешно удалено');
+        return redirect()->route($route_name, $params)->with('success', 'Успешно удалено');
     }
 }
