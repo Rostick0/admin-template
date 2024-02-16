@@ -57,6 +57,7 @@ class ApiController extends Controller
             'data' => Filter::one($request, $this->model, $id, $this::getWhere())
         ]);
     }
+    
     public function update(Request $request, int $id)
     {
         $data = $this->model::findOrFail($id);

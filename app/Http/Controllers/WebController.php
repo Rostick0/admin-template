@@ -57,10 +57,11 @@ class WebController extends Controller
         ])->with('success', '');
     }
 
-    public function show(int $id, string $view)
+    public function show(int $id, string $view, array $vars = [])
     {
         return view($view, [
-            $this->name_data => $this->model::findOrFail($id)
+            $this->name_data => $this->model::findOrFail($id),
+            ...$vars,
         ]);
     }
 

@@ -21,6 +21,8 @@ Route::get('/', function () {
 });
 
 Route::resource('posts', ClientPostController::class);
+Route::resource('rubrics', ClientPostController::class)->only(['index', 'show']);
+
 
 Route::prefix('admin')
     ->name('admin.')
