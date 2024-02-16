@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminPostController;
 use App\Http\Controllers\Admin\AdminRubricController;
 use App\Http\Controllers\Client\ClientPostController;
+use App\Http\Controllers\Client\ClientRubricController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,7 +22,7 @@ Route::get('/', function () {
 });
 
 Route::resource('posts', ClientPostController::class);
-Route::resource('rubrics', ClientPostController::class)->only(['index', 'show']);
+Route::resource('rubrics', ClientRubricController::class)->only(['index', 'show']);
 
 
 Route::prefix('admin')

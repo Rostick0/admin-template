@@ -23,7 +23,7 @@ class StoreRubricRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|' . Rule::exists('rubrics', 'id'),
+            'name' => 'required|unique:rubrics,name',
         ];
     }
 }

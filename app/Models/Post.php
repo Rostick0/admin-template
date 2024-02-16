@@ -18,6 +18,8 @@ class Post extends Model
         'rubric_id',
         'source',
         'count_view',
+        'status',
+        'is_private',
         'date_publication',
     ];
 

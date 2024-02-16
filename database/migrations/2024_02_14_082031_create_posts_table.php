@@ -19,7 +19,10 @@ return new class extends Migration
             $table->foreignId('rubric_id')->references('id')->on('rubrics')->onDelete('cascade');
             $table->string('source')->nullable();
             $table->integer('count_view')->default(0);
+            $table->enum('status', ['publish', 'pending', 'draft', 'future'])->default('draft');
+            $table->boolean('is_private')->default(0);
             $table->timestamp('date_publication')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
