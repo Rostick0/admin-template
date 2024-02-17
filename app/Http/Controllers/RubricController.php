@@ -9,12 +9,10 @@ use App\Http\Requests\UpdateRubricRequest;
 use App\Utils\AccessUtil;
 use Illuminate\Http\Request;
 
-class RubricController extends WebController
+class RubricController extends ApiController
 {
     public function __construct(){
         $this->model = new Rubric;
-        $this->name_datas = 'rubrics';
-        $this->name_data = 'rubric';
     }
 
     protected static function getWhere()

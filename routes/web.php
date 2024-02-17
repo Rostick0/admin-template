@@ -17,24 +17,3 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-Route::view('{any?}', 'app')->where('any', '.*');
-Route::view('', 'app');
-// Route::get('', AppController::class);
-// Route::get('{any?}', [AppController::class, 'get'])->where('any', '.*');
-
-// Route::resource('posts', ClientPostController::class);
-// Route::resource('rubrics', ClientRubricController::class)->only(['index', 'show']);
-
-
-// Route::prefix('admin')
-//     ->name('admin.')
-//     ->group(function () {
-//         Route::view('', 'pages.admin.index')->name('index');
-//         Route::resource('posts', AdminPostController::class)->except(['show']);
-//         Route::resource('rubrics', AdminRubricController::class)->except(['show']);
-//     });

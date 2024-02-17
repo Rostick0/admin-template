@@ -11,12 +11,10 @@ use App\Utils\AccessUtil;
 use App\Utils\QueryString;
 use Illuminate\Http\Request;
 
-class PostController extends WebController
+class PostController extends ApiController
 {
     public function __construct(){
         $this->model = new Post;
-        $this->name_datas = 'posts';
-        $this->name_data = 'post';
     }
 
     protected static function extendsMutation($data, $request)

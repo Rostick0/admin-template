@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\RubricController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,4 +29,9 @@ Route::prefix('v1')
 
         Route::apiResource('file', FileController::class)->only(['index', 'store', 'show', 'destroy']);
         Route::apiResource('image', ImageController::class)->only(['index', 'store', 'show', 'destroy']);
+
+        Route::apiResources([
+            'posts' => PostController::class,
+            'rubrics' => RubricController::class,
+        ]);
     });
