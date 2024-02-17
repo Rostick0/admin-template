@@ -1,7 +1,7 @@
 @extends('layout.admin.index')
 
 @section('html')
-<form class="admin-form" action="">
+<form class="admin-form" action="" method="post">
     <!-- 'title',
     'content',
     'user_id',
@@ -28,4 +28,10 @@
     </div>
     <button class="admin-btn admin-form__btn">Создать</button>
 </form>
+@endsection
+
+@section('js')
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+@vite(['resources/js/pages/admin/post/create.js'])
 @endsection
