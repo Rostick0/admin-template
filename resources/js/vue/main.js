@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-// import router from '@/app/router';
+import router from '@/app/router';
 // import componentsUI from '@/ui';
 // import directives from '@/app/directives';
 // import VueLazyLoad from 'vue-lazyload';
@@ -40,7 +40,7 @@ const app = createApp(App);
 
 
 app
-    // .use(router)
+    .use(router)
     // .use(VueLazyLoad)
     // .use(store)
     .mount('#app')

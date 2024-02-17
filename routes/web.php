@@ -17,18 +17,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::resource('posts', ClientPostController::class);
-Route::resource('rubrics', ClientRubricController::class)->only(['index', 'show']);
+Route::view('{any?}', 'index')->where('any', '.*');
+
+// Route::resource('posts', ClientPostController::class);
+// Route::resource('rubrics', ClientRubricController::class)->only(['index', 'show']);
 
 
-Route::prefix('admin')
-    ->name('admin.')
-    ->group(function () {
-        Route::view('', 'pages.admin.index')->name('index');
-        Route::resource('posts', AdminPostController::class)->except(['show']);
-        Route::resource('rubrics', AdminRubricController::class)->except(['show']);
-    });
+// Route::prefix('admin')
+//     ->name('admin.')
+//     ->group(function () {
+//         Route::view('', 'pages.admin.index')->name('index');
+//         Route::resource('posts', AdminPostController::class)->except(['show']);
+//         Route::resource('rubrics', AdminRubricController::class)->except(['show']);
+//     });

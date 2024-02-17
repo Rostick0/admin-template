@@ -8,8 +8,6 @@ export default defineConfig({
         vue(),
         laravel({
             input: [
-                "resources/scss/app.scss",
-                "resources/scss/admin/index.scss",
                 "resources/js/app.js",
             ],
             refresh: true,
@@ -17,7 +15,7 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            "@": path.resolve(__dirname, "resources/js/src"),
+            "@": path.resolve(__dirname, "resources/js/vue"),
         },
     },
 });
