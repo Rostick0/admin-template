@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminPostController;
 use App\Http\Controllers\Admin\AdminRubricController;
+use App\Http\Controllers\AppController;
 use App\Http\Controllers\Client\ClientPostController;
 use App\Http\Controllers\Client\ClientRubricController;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +22,10 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::view('{any?}', 'index')->where('any', '.*');
+Route::view('{any?}', 'app')->where('any', '.*');
+Route::view('', 'app');
+// Route::get('', AppController::class);
+// Route::get('{any?}', [AppController::class, 'get'])->where('any', '.*');
 
 // Route::resource('posts', ClientPostController::class);
 // Route::resource('rubrics', ClientRubricController::class)->only(['index', 'show']);

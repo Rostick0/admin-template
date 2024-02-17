@@ -1,6 +1,5 @@
 <template>
     <div class="wrapper">
-        <!-- 1 -->
         <router-view />
         <!-- <AlertWrapper></AlertWrapper> -->
         <!-- <Input /> -->
@@ -8,7 +7,7 @@
 </template>
 
 <script setup>
-import Input from '@/app/components/admin/ui/Input.vue';
+import Input from "@/app/components/admin/ui/Input.vue";
 // import AlertWrapper from '@/components/AlertWrapper/AlertWrapper.vue';
 // import { computed, watchEffect, onMounted } from 'vue';
 // import { useStore } from 'vuex';

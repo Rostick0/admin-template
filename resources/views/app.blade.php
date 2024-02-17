@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!-- <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-token-with-polyfills-latest.js"></script> -->
     <title>My Admin</title>
+    @vite('resources/js/app.js')
 </head>
 
 <body>
@@ -19,7 +20,6 @@
         </script>
     @endif -->
     <div id="app"></div>
-    @vite('resources/js/app.js')
 </body>
 
 </html>
