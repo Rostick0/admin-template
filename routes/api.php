@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PostController;
@@ -26,6 +27,16 @@ Route::prefix('v1')
     ->name('api.')
     ->middleware('api')
     ->group(function () {
+        Route::group(['prefix' => 'auth'], function () {
+            Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:300,1');
+            Route::post('/register', [AuthController::class, 'register']);
+
+            Route::group(['middleware' => 'jwt'], function () {
+                Route::post('/logout', [AuthController::class, 'logout']);
+                Route::post('/refresh', [AuthController::class, 'refresh']);
+                Route::get('/me', [AuthController::class, 'me']);
+            });
+        });
 
         Route::apiResource('file', FileController::class)->only(['index', 'store', 'show', 'destroy']);
         Route::apiResource('image', ImageController::class)->only(['index', 'store', 'show', 'destroy']);
