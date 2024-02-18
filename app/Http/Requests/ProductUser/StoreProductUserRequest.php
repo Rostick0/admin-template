@@ -3,6 +3,7 @@
 namespace App\Http\Requests\ProductUser;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreProductUserRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreProductUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -22,7 +23,8 @@ class StoreProductUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'quantity' => 'required|numeric',
+            'product_id'  => 'required|' . Rule::exists('products', 'id'),
         ];
     }
 }

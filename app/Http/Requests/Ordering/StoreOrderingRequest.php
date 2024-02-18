@@ -21,8 +21,19 @@ class StoreOrderingRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
+        $rules = [
+            'name' => 'required|max:255',
+            'date' => 'nullable|date',
+            'address' => 'required|max:255',
+            'status' => 'required|in:pending,draft',
         ];
+
+        if (auth()->user()->role === 'admin') {
+            $rules['status'] = 'required|in:pending,canceled,draft,completed,rejected';
+
+            $rules['reason'] = 'nullable';
+        }
+
+        return $rules;
     }
 }

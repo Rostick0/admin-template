@@ -21,8 +21,19 @@ class UpdateOrderingRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
+        $rules = [
+            'name' => 'filled|max:255',
+            'date' => 'nullable|date',
+            'address' => 'filled|max:255',
+            'status' => 'filled|in:pending,draft',
         ];
+
+        if (auth()->user()->role === 'admin') {
+            $rules['status'] = 'filled|in:pending,canceled,draft,completed,rejected';
+
+            $rules['reason'] = 'nullable';
+        }
+
+        return $rules;
     }
 }

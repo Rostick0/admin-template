@@ -21,9 +21,9 @@ return new class extends Migration
             $table->boolean('is_infinitely')->default(0);
             $table->float('raiting')->default(0);
             $table->integer('views')->default(0);
-            $table->string('vendor')->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreignId('vendor_id')->references('id')->on('vendors')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

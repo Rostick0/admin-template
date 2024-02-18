@@ -20,9 +20,9 @@ class Product extends Model
        'count',
        'is_infinitely',
        'raiting',
-       'vendor',
        'user_id',
        'category_id',
+       'vendor_id',
     ];
 
     public function files(): MorphMany
@@ -43,5 +43,10 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function vendor(): BelongsTo
+    {
+        return $this->belongsTo(Vendor::class);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -22,7 +23,14 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'filled|max:255',
+            'description' => 'filled|max:65536',
+            'price' => ['filled', 'regex:/^\d+(\.\d{1,2})?$/'],
+            'old_price' => ['nullable', 'regex:/^\d+(\.\d{1,2})?$/'],
+            'count' => 'nullable|numeric',
+            'is_infinitely' => 'nullable',
+            'vendor_id' => 'filled|' . Rule::exists('vendors', 'id'),
+            'category_id' => 'filled|' . Rule::exists('categories', 'id'),
         ];
     }
 }
