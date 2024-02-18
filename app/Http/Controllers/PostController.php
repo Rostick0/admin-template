@@ -15,6 +15,9 @@ class PostController extends ApiController
 {
     public function __construct(){
         $this->model = new Post;
+        $this->is_auth_id = true;
+        $this->store_request = new StorePostRequest;
+        $this->update_request = new UpdatePostRequest;
     }
 
     protected static function extendsMutation($data, $request)

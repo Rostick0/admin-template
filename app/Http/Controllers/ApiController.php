@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Filters\Filter;
+use Illuminate\Http\Request;
 use App\Utils\AccessUtil;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
     protected $model;
     protected $is_auth_id = false;
     protected $fillable_block = [];
+    protected $store_request;
+    protected $update_request;
 
     public function __construct(Model $model)
     {
@@ -36,11 +38,17 @@ class ApiController extends Controller
         );
     }
 
+    // Request
     public function store(Request $request)
     {
-        $create_data = [
-            ...$request->validated(),
-        ];
+        if ($this->store_request && !($this->store_request)->authorize()) return AccessUtil::errorMessage();
+
+        $create_data = $this->store_request ?
+            [...$request->validate(
+                ($this->store_request)->rules()
+            )]
+            :
+            [...$request->all()];
 
         if ($this->is_auth_id) $create_data['user_id'] = auth()->id();
 
@@ -57,14 +65,19 @@ class ApiController extends Controller
             'data' => Filter::one($request, $this->model, $id, $this::getWhere())
         ]);
     }
-    
+
     public function update(Request $request, int $id)
     {
+        if ($this->update_request && !($this->update_request)->authorize()) return AccessUtil::errorMessage();
+       
         $data = $this->model::findOrFail($id);
 
         if (AccessUtil::cannot('update', $data)) return AccessUtil::errorMessage();
 
-        $data->update($request->validated());
+        $data->update(
+            $this->update_request
+                ? $request->validate(($this->update_request)->rules()) : $request->all()
+        );
 
         $this::extendsMutation($data, $request);
 

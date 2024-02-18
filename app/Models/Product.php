@@ -8,20 +8,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Post extends Model
+class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'title',
-        'content',
-        'user_id',
-        'rubric_id',
-        'source',
-        'count_view',
-        'status',
-        'is_private',
-        'date_publication',
+       'title',
+       'description',
+       'price',
+       'old_price',
+       'count',
+       'is_infinitely',
+       'raiting',
+       'vendor',
+       'user_id',
+       'category_id',
     ];
 
     public function files(): MorphMany
@@ -39,8 +40,8 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function rubric(): BelongsTo
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(Rubric::class);
+        return $this->belongsTo(Category::class);
     }
 }

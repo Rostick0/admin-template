@@ -1,10 +1,14 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\OrderingController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RubricController;
+use App\Models\ProductUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -44,5 +48,9 @@ Route::prefix('v1')
         Route::apiResources([
             'posts' => PostController::class,
             'rubrics' => RubricController::class,
+            'categories' => CategoryController::class,
+            'products' => ProductController::class,
+            'product-users' => ProductUser::class,
+            'orderings' => OrderingController::class,
         ]);
     });
