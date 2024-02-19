@@ -4,6 +4,7 @@ namespace App\Filters;
 
 use App\Utils\FilterHasRequestUtil;
 use App\Utils\FilterHasUtil;
+use App\Utils\FilterQResuestUtil;
 use App\Utils\FilterRequestUtil;
 use App\Utils\FilterSomeRequestUtil;
 use App\Utils\OrderByUtil;
@@ -14,14 +15,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class Filter
 {
-    public static function all($request, Model $model, array $fillable_block = [], array $where = []): Paginator
+    public static function all($request, Model $model, array $fillable_block = [], array $where = [], array $q_request = []): Paginator
     {
-        $data = Filter::query($request, $model, $fillable_block, $where);
-        
+        $data = null;
+
+        if ($q_request) {
+            $data = FilterQResuestUtil::setParam($request->filterQ, Filter::query($request, $model, $fillable_block, $where), $q_request[0]);
+
+            foreach (array_slice($q_request, 1) as $param) {
+                $data->union(FilterQResuestUtil::setParam($request->filterQ, Filter::query($request, $model, $fillable_block, $where), $param));
+            }
+        } else {
+            $data = Filter::query($request, $model, $fillable_block, $where);
+        }
+
         $data = $data->paginate($request->limit);
 
         return $data;
     }
+    // public static function all($request, Model $model, array $fillable_block = [], array $where = []): Paginator
+    // {
+    //     $data = Filter::query($request, $model, $fillable_block, $where);
+        
+    //     $data = $data->paginate($request->limit);
+
+    //     return $data;
+    // }
 
     public static function query($request, Model $model, array $fillable_block = [], array $where = [])
     {
