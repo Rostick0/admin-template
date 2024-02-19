@@ -15,6 +15,7 @@ class ApiController extends Controller
     protected $fillable_block = [];
     protected $store_request;
     protected $update_request;
+    protected $q_request = [];
 
     public function __construct(Model $model)
     {
@@ -34,7 +35,7 @@ class ApiController extends Controller
     public function index(Request $request)
     {
         return new JsonResponse(
-            Filter::all($request, $this->model, $this->fillable_block, $this::getWhere())
+            Filter::all($request, $this->model, $this->fillable_block, $this::getWhere(), $this->q_request)
         );
     }
 
