@@ -30,6 +30,15 @@ class PostController extends ApiController
 
             $data->images()->createMany($images);
         }
+
+        $data->files()->delete();
+        if ($request->has('files')) {
+            $files = array_map(function ($file_id) {
+                return ['file_id' => $file_id];
+            }, QueryString::convertToArray($request->files));
+
+            $data->files()->createMany($files);
+        }
     }
 
     // protected static function getWhere()
