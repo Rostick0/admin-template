@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('path');
             $table->string('type');
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }
