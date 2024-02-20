@@ -7,6 +7,8 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\OrderingController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\PropertyItemController;
 use App\Http\Controllers\RubricController;
 use App\Http\Controllers\VendorController;
 use App\Models\ProductUser;
@@ -54,5 +56,8 @@ Route::prefix('v1')
             'products' => ProductController::class,
             'product-users' => ProductUser::class,
             'orderings' => OrderingController::class,
+            'properties' => PropertyController::class,
+            'property_items' => PropertyItemController::class,
+            
         ]);
     });

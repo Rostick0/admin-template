@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Rubric;
+namespace App\Http\Requests\Property;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class StoreRubricRequest extends FormRequest
+class UpdatePropertyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +22,7 @@ class StoreRubricRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:rubrics,name|max:255',
+            'name' => ['required', 'unique:properties,name,' . $this->property, 'max:255'],
         ];
     }
 }
