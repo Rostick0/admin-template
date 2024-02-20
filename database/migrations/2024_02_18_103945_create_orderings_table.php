@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->timestamp('date')->nullable();
             $table->string('address');
-            $table->integer('user_id')->nullable();
             $table->enum('status', ['pending', 'canceled', 'draft', 'completed', 'rejected'])->default('draft');
             $table->string('reason')->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }
