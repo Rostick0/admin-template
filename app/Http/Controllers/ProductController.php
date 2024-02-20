@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductPropertyItem\StoreProductPropertyItemRequest;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Casts\Json;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Utils\QueryString;
 use Illuminate\Http\Request;
+use Validator;
 
 class ProductController extends ApiController
 {
@@ -36,6 +39,21 @@ class ProductController extends ApiController
             }, QueryString::convertToArray($request->files));
 
             $data->files()->createMany($files);
+        }
+
+        $data->product_property_item()->delete();
+        if ($request->has('product_property_item')) {
+            $product_property_items = [];
+
+            foreach (Json::decode($request->product_property_item) as $item) {
+                $valid = Validator::make($item, (new StoreProductPropertyItemRequest)->rules());
+
+                if (!$valid->passes()) continue;
+
+                $product_property_items[] = $valid->validated();
+            }  
+
+            $data->product_property_items()->createMany($product_property_items);
         }
     }
 }

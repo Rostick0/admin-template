@@ -58,6 +58,6 @@ Route::prefix('v1')
             'orderings' => OrderingController::class,
             'properties' => PropertyController::class,
             'property_items' => PropertyItemController::class,
-            
+
         ]);
     });

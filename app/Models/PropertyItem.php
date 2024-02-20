@@ -13,6 +13,7 @@ class PropertyItem extends Model
     protected $fillable = [
         'name',
         'type',
+        'unit',
         'property_id',
     ];
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\PropertyItem;
+namespace App\Http\Requests\ProductPropertyItem;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StorePropertyItemRequest extends FormRequest
+class StoreProductPropertyItemRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,9 @@ class StorePropertyItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:255',
-            'type' => 'required|in:checkbox,select,input',
-            'unit' => 'required|max:255',
-            'property_id' => 'required|numeric|' . Rule::exists('properties', 'id'),
+            'value' => 'nullable|max:255',
+            'property_item_id' => 'required|' . Rule::exists('property_items', 'id'),
+            // 'product_id' => 'required',
         ];
     }
 }
