@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Rubric;
-use Carbon\Carbon;
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
-class RubricSeeder extends Seeder
+class CategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -33,12 +33,12 @@ class RubricSeeder extends Seeder
                 'updated_at' => $now,
             ],
             [
-                'name' => 'Разное',
+                'name' => 'Отдых и развлечение',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
         ];
 
-        Rubric::insert($data);
+        Category::insert($data);
     }
 }
