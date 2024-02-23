@@ -37,7 +37,7 @@ class VendorPolicy
      */
     public function update(User $user, Vendor $vendor): bool
     {
-        return  $user->role === 'admin';
+        return $user->role === 'admin';
     }
 
     /**

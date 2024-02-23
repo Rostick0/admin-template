@@ -42,7 +42,7 @@ class ApiController extends Controller
     // Request
     public function store(Request $request)
     {
-        if ($this->store_request && !($this->store_request)->authorize()) return AccessUtil::errorMessage();
+        if ($this->store_request && !($this->store_request)->authorize() && AccessUtil::cannot('update', $this->model)) return AccessUtil::errorMessage();
 
         $create_data = $this->store_request ?
             [...$request->validate(

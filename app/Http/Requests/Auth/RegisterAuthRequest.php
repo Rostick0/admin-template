@@ -26,7 +26,6 @@ class RegisterAuthRequest extends FormRequest
             'email' => 'nullable|email|unique:users,email|max:255',
             'password' => 'required|min:6|max:255',
             'phone' => 'required|unique:users,phone|max:30',
-            'role' => 'required|in:client,realtor,agency,builder',
             'type_social' => 'nullable|in:whatsapp,viber,telegram',
         ];
     }
