@@ -24,6 +24,7 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
+            'description' => 'nullable|max:65536',
             'parent_id' => 'nullable|numeric|' . Rule::exists('categories', 'id'),
         ];
     }

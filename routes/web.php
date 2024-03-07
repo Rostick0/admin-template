@@ -19,4 +19,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/storage/upload/image/{path}', [StorageImageController::class, 'show']);
+Route::get('/storage/image/{path}', [StorageImageController::class, 'show']);
+// Route::get('/storage/upload/image/{path}', [StorageImageController::class, 'show']);
