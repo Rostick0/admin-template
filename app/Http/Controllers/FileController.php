@@ -2,92 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\Filter;
-use App\Http\Requests\File\IndexFileRequest;
 use App\Models\File;
 use App\Http\Requests\File\StoreFileRequest;
-use App\Utils\FilterRequestUtil;
-use App\Utils\OrderByUtil;
-use App\Utils\QueryString;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
-    private static function getWhere()
-    {
-        $where = [];
 
-        // if (auth()?->user()?->role !== 'admin') {
-        //     $where[] = ['user_id', '=', auth()?->id()];
-        // }
-
-        return $where;
-    }
- 
-    public function index(IndexFileRequest $request)
-    {
-        return new JsonResponse(
-            Filter::all($request, new File, [], $this::getWhere())
-        );
-    }
-
-    /**
-     * Store
-     * @OA\Post (
-     *     path="/api/file",
-     *     tags={"File"},
-     *     security={{"bearer_token": {}}},
-     *     @OA\RequestBody(
-     *         @OA\MediaType(
-     *             mediaType="multipart/form-data",
-     *             @OA\Schema(
-     *                      required={"file"},
-     *                      @OA\Property(
-     *                          property="file",
-     *                          type="file",
-     *                      ),
-     *              )
-     *         )
-     *      ),
-     *      @OA\Response(
-     *          response=201,
-     *          description="Success",
-     *          @OA\JsonContent(
-     *              @OA\Property(property="data", type="object",
-     *                  ref="#/components/schemas/FileSchema"
-     *              ),
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=400,
-     *          description="Validation error",
-     *          @OA\JsonContent(
-     *                  @OA\Property(property="message", type="string", example="The file field is required."),
-     *                  @OA\Property(property="errors", type="object",
-     *                      @OA\Property(property="The", type="array", collectionFormat="multi",
-     *                        @OA\Items(
-     *                          type="string",
-     *                          example="The The field is required.",
-     *                          )
-     *                      ),
-     *                 ),
-     *          )
-     *      )
-     * )
-     */
     public function store(StoreFileRequest $request)
     {
         $file = $request->file('file');
 
         $extension = $file->getClientOriginalExtension();
-        $random_name = 'upload/' . random_int(1000, 9999) . time() . '.' . $extension;
 
-        $file->storeAs('public/' . $random_name);
+        $date = Carbon::now();
+
+        $dir = 'upload/file/';
+        $random_name = $dir . $date->format('Y/m/d') . '/' . random_int(1000, 9999) . time() . '.' . $extension;
+        $random_name_with_extension = 'public/' . $random_name;
+
+        Storage::makeDirectory('public/' . $dir . $date->format('Y'));
+        Storage::makeDirectory('public/' . $dir . $date->format('Y/m'));
+        Storage::makeDirectory('public/' . $dir . $date->format('Y/m/d'));
+
+        $file->storeAs($random_name_with_extension);
 
         $data = File::create([
             'name' =>  $file->getClientOriginalName(),
-            'path' => url('') . '/storage/' . $random_name,
+            'path' => config()->get('app.url') . '/storage/' . $random_name,
             'type' => $file->getClientMimeType(),
             'user_id' => auth()->id(),
         ]);
@@ -97,80 +41,15 @@ class FileController extends Controller
         ], 201);
     }
 
-
-    /**
-     * Show
-     * @OA\get (
-     *     path="/api/file/{id}",
-     *     tags={"File"},
-     *     @OA\Parameter( 
-     *          name="id",
-     *          description="Id",
-     *          in="path",
-     *          required=true,
-     *          example="1",
-     *          @OA\Schema(
-     *              type="number"
-     *          ),
-     *     ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Success",
-     *          @OA\JsonContent(
-     *              @OA\Property(property="data", type="object",
-     *                  ref="#/components/schemas/FileSchema"
-     *              ),
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Validation error",
-     *          @OA\JsonContent(
-     *                  @OA\Property(property="message", type="string", example="Not found"),
-     *                  ),
-     *          )
-     *      )
-     * )
-     */
-    public function show(Request $request, int $id)
+    public function show(int $id)
     {
+        $file = File::findOrFail($id);
+
         return new JsonResponse([
-            'data' => Filter::one($request, new File, $id, $this::getWhere())
+            'data' => $file
         ]);
     }
 
-    /**
-     * Delete
-     * @OA\Delete (
-     *     path="/api/file/{id}",
-     *     tags={"File"},
-     *     security={{"bearer_token": {}}},
-     *     @OA\Parameter(
-     *          name="id",
-     *          description="File id",
-     *          required=true,
-     *          in="path",
-     *          @OA\Schema(
-     *              type="integer"
-     *          )
-     *      ),
-     *     @OA\Response(
-     *          response=200,
-     *          description="Success",
-     *          @OA\JsonContent(
-     *              @OA\Property(property="message", type="string", example="Deleted"),
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=403,
-     *          description="Access error",
-     *          @OA\JsonContent(
-     *                  @OA\Property(property="message", type="string", example="No access"),
-     *                 ),
-     *          )
-     *      )
-     * )
-     */
     public function destroy(int $id)
     {
         $file = File::findOrFail($id);
