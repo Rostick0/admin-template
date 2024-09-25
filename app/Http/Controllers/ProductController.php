@@ -7,9 +7,9 @@ use App\Models\Product;
 use Illuminate\Database\Eloquent\Casts\Json;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
-use App\Utils\QueryString;
+use Rostislav\LaravelFilters\Filters\QueryString;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends ApiController
 {
@@ -51,9 +51,20 @@ class ProductController extends ApiController
                 if (!$valid->passes()) continue;
 
                 $product_property_items[] = $valid->validated();
-            }  
+            }
 
             $data->product_property_items()->createMany($product_property_items);
         }
+    }
+
+    protected static function getWhere(?Request $request = null)
+    {
+        $where = [];
+
+        if ($request->user()?->role !== 'admin') {
+            // $where[] = ['is_show', '=', 1];
+        }
+
+        return $where;
     }
 }

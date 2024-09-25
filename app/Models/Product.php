@@ -24,6 +24,7 @@ class Product extends Model
         'user_id',
         'category_id',
         'vendor_id',
+        'is_show'
     ];
 
     public function files(): MorphMany

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vendor;
 use App\Http\Requests\Vendor\StoreVendorRequest;
 use App\Http\Requests\Vendor\UpdateVendorRequest;
-use App\Utils\QueryString;
+use Rostislav\LaravelFilters\Filters\QueryString;
 
 class VendorController extends ApiController
 {

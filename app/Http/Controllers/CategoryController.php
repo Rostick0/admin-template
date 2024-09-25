@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
-use App\Utils\QueryString;
+use Rostislav\LaravelFilters\Filters\QueryString;
 
 class CategoryController extends ApiController
 {
