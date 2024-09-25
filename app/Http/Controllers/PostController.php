@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\StatusType;
 use App\Models\Post;
 use App\Http\Requests\Post\StorePostRequest;
 use App\Http\Requests\Post\UpdatePostRequest;
@@ -44,7 +45,8 @@ class PostController extends ApiController
         $where = [];
 
         if ($request->user()?->role !== 'admin') {
-            $where[] = ['is_show', '=', 1];
+
+            $where[] = ['status', '=', StatusType::publish];
         }
 
         return $where;

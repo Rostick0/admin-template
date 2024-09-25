@@ -22,7 +22,6 @@ class Post extends Model
         'status',
         'is_private',
         'date_publication',
-        'is_show'
     ];
 
     public function files(): MorphMany

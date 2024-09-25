@@ -1,5 +1,7 @@
 <?php
 
+use App\Enum\StatusType;
+use App\Utils\EnumFields;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,7 +26,8 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreignId('vendor_id')->references('id')->on('vendors')->onDelete('cascade');
-            $table->boolean('is_show')->default(0);
+            $table->enum('status', EnumFields::getColumn(StatusType::class))->default(StatusType::draft);
+            $table->timestamp('date_publication')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
