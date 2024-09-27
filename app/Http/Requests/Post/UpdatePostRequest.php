@@ -24,6 +24,7 @@ class UpdatePostRequest extends FormRequest
     {
         $rules = [
             'title' => 'filled|max:255',
+            'description' => 'nullable|max:255',
             'content' => 'filled|max:65536',
             'rubric_id' => 'filled|' . Rule::exists('rubrics', 'id'),
             'source' => 'nullable|max:255',

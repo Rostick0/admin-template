@@ -31,6 +31,15 @@ class UpdateProductRequest extends FormRequest
             'is_infinitely' => 'nullable',
             'vendor_id' => 'filled|' . Rule::exists('vendors', 'id'),
             'category_id' => 'filled|' . Rule::exists('categories', 'id'),
+            'date_publication' => 'nullable|date',
         ];
+
+        if (auth()->user()->role === 'admin') {
+            $rules['status'] = 'nullable|in:publish,pending,draft,future';
+        } else {
+            $rules['status'] = 'nullable|in:pending,draft';
+        }
+
+        return $rules;
     }
 }

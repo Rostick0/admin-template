@@ -30,7 +30,7 @@ class Image extends Model
         'width',
         'height',
         'path',
-        'type',
+        'path_webp',
         'user_id',
     ];
 

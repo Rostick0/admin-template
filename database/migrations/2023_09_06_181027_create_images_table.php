@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('width')->nullable();
             $table->integer('height')->nullable();
             $table->string('path');
-            $table->string('type');
+            $table->string('path_webp');
             $table->integer('user_id')->nullable();
             $table->timestamps();
         });

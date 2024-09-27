@@ -11,7 +11,7 @@ class StoreImageRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->check();
         // return auth()->check() && auth()?->user()?->can('create', Image::class);
     }
 

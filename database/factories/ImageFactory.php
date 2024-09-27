@@ -24,7 +24,7 @@ class ImageFactory extends Factory
             'width' => $random_width,
             'height' => $random_height,
             'path' => fake()->imageUrl($random_width, $random_height),
-            'type' => 'image/png',
+            'path_webp' => fake()->imageUrl($random_width, $random_height),
             'user_id' => 1,
         ];
     }

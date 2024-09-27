@@ -22,7 +22,7 @@ class StoreProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'title' => 'required|max:255',
             'description' => 'required|max:65536',
             'price' => ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
@@ -31,6 +31,15 @@ class StoreProductRequest extends FormRequest
             'is_infinitely' => 'nullable',
             'vendor_id' => 'required|' . Rule::exists('vendors', 'id'),
             'category_id' => 'required|' . Rule::exists('categories', 'id'),
+            'date_publication' => 'nullable|date',
         ];
+
+        if (auth()->user()->role === 'admin') {
+            $rules['status'] = 'nullable|in:publish,pending,draft,future';
+        } else {
+            $rules['status'] = 'nullable|in:pending,draft';
+        }
+
+        return $rules;
     }
 }
