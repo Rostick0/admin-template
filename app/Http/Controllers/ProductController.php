@@ -36,7 +36,7 @@ class ProductController extends ApiController
         if ($request->has('files')) {
             $files = array_map(function ($file_id) {
                 return ['file_id' => $file_id];
-            }, QueryString::convertToArray($request->files));
+            }, QueryString::convertToArray($request->input('files')));
 
             $data->files()->createMany($files);
         }
