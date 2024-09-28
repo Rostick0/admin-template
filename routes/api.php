@@ -46,7 +46,7 @@ Route::prefix('v1')
         Route::apiResource('image', ImageController::class)->only(['index', 'store', 'show', 'destroy']);
 
         Route::get('/statistic-days', [StatisticDayController::class, 'index']);
-        Route::post('/statistic-days', [StatisticDayController::class, 'increment']);
+        Route::post('/statistic-days/increment', [StatisticDayController::class, 'increment']);
 
         Route::apiResources([
             'posts' => PostController::class,
