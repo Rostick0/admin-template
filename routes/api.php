@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\OrderingController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\PropertyItemController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RubricController;
 use App\Http\Controllers\StatisticDayController;
 use App\Http\Controllers\VendorController;
@@ -58,6 +60,7 @@ Route::prefix('v1')
             'orderings' => OrderingController::class,
             'properties' => PropertyController::class,
             'property_items' => PropertyItemController::class,
-
+            'reviews' => ReviewController::class,
+            'comments' => CommentController::class
         ]);
     });

@@ -49,4 +49,9 @@ class Post extends Model
     {
         return $this->morphMany(StatisticDay::class, 'stat_relatsable');
     }
+
+    public function comments(): MorphMany
+    {
+        return $this->morphMany(Comment::class, 'comment_relatsable');
+    }
 }
