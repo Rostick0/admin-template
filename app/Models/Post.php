@@ -44,4 +44,9 @@ class Post extends Model
     {
         return $this->belongsTo(Rubric::class);
     }
+
+    public function statistic_days(): MorphMany
+    {
+        return $this->morphMany(StatisticDay::class, 'stat_relatsable');
+    }
 }

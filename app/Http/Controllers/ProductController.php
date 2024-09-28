@@ -23,8 +23,8 @@ class ProductController extends ApiController
 
     protected static function extendsMutation($data, $request)
     {
-        $data->images()->delete();
         if ($request->has('images')) {
+            $data->images()->delete();
             $images = array_map(function ($image_id) {
                 return ['image_id' => $image_id];
             }, QueryString::convertToArray($request->images));
@@ -32,8 +32,8 @@ class ProductController extends ApiController
             $data->images()->createMany($images);
         }
 
-        $data->files()->delete();
         if ($request->has('files')) {
+            $data->files()->delete();
             $files = array_map(function ($file_id) {
                 return ['file_id' => $file_id];
             }, QueryString::convertToArray($request->input('files')));
@@ -41,8 +41,8 @@ class ProductController extends ApiController
             $data->files()->createMany($files);
         }
 
-        $data->product_property_item()->delete();
         if ($request->has('product_property_item')) {
+            $data->product_property_item()->delete();
             $product_property_items = [];
 
             foreach (Json::decode($request->product_property_item) as $item) {

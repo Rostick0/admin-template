@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\PropertyItemController;
 use App\Http\Controllers\RubricController;
+use App\Http\Controllers\StatisticDayController;
 use App\Http\Controllers\VendorController;
 use App\Models\ProductUser;
 use Illuminate\Http\Request;
@@ -43,6 +44,9 @@ Route::prefix('v1')
 
         Route::apiResource('file', FileController::class)->only(['index', 'store', 'show', 'destroy']);
         Route::apiResource('image', ImageController::class)->only(['index', 'store', 'show', 'destroy']);
+
+        Route::get('/statistic-days', [StatisticDayController::class, 'index']);
+        Route::post('/statistic-days', [StatisticDayController::class, 'increment']);
 
         Route::apiResources([
             'posts' => PostController::class,

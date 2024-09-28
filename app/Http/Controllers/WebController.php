@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\Filter;
 use App\Utils\AccessUtil;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Rostislav\LaravelFilters\Filter;
 
 class WebController extends Controller
 {
@@ -19,9 +19,7 @@ class WebController extends Controller
         $this->model = $model;
     }
 
-    protected static function extendsMutation($data, $request)
-    {
-    }
+    protected static function extendsMutation($data, $request) {}
 
     protected static function getWhere()
     {

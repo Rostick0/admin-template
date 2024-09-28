@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\Filter;
 use App\Http\Requests\Auth\LoginAuthRequest;
 use App\Http\Requests\Auth\RegisterAuthRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Rostislav\LaravelFilters\Filter;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller

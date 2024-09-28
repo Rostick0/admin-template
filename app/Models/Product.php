@@ -53,6 +53,12 @@ class Product extends Model
         return $this->belongsTo(Vendor::class);
     }
 
+
+    public function statistic_days(): MorphMany
+    {
+        return $this->morphMany(StatisticDay::class, 'stat_relatsable');
+    }
+
     public function product_property_item(): HasMany
     {
         return $this->hasMany(ProductPropertyItem::class);

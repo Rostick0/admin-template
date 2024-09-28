@@ -9,7 +9,8 @@ use Rostislav\LaravelFilters\Filters\QueryString;
 
 class CategoryController extends ApiController
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->model = new Category;
         $this->store_request = new StoreCategoryRequest;
         $this->update_request = new UpdateCategoryRequest;
@@ -17,8 +18,8 @@ class CategoryController extends ApiController
 
     protected static function extendsMutation($data, $request)
     {
-        $data->images()->delete();
         if ($request->has('images')) {
+            $data->images()->delete();
             $images = array_map(function ($image_id) {
                 return ['image_id' => $image_id];
             }, QueryString::convertToArray($request->images));
