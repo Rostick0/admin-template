@@ -23,10 +23,10 @@ class UpdatePropertyItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:255',
-            'type' => 'required|in:checkbox,select,input',
-            'unit' => 'required|max:255',
-            'property_id' => 'required|numeric|' . Rule::exists('properties', 'id'),
+            'name' => 'filled|max:255',
+            'type' => 'filled|in:checkbox,select,input',
+            'unit' => 'filled|max:255',
+            'property_id' => 'filled|numeric|' . Rule::exists('properties', 'id'),
         ];
     }
 }

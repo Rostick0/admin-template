@@ -63,4 +63,9 @@ class Product extends Model
     {
         return $this->hasMany(ProductPropertyItem::class);
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

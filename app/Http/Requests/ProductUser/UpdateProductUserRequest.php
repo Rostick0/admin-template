@@ -23,8 +23,8 @@ class UpdateProductUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'quantity' => 'required|numeric',
-            'product_id'  => 'required|' . Rule::exists('products', 'id'),
+            'quantity' => 'filled|numeric',
+            'product_id'  => 'filled|' . Rule::exists('products', 'id'),
         ];
     }
 }

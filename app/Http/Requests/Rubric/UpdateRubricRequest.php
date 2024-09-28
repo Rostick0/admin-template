@@ -23,7 +23,7 @@ class UpdateRubricRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'unique:rubrics,name,' . $this->rubric, 'max:255'],
+            'name' => ['filled', 'unique:rubrics,name,' . $this->rubric, 'max:255'],
         ];
     }
 }

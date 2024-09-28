@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Review;
 
+use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateReviewRequest extends FormRequest
 {
@@ -22,7 +24,11 @@ class UpdateReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'mark' => 'filled|numeric|min:1|max:5',
+            'dignities' => 'nullable|max:300',
+            'disadvantages' => 'nullable|max:300',
+            'comment' => 'nullable|max:300',
+            'product_id' => 'filled|' . Rule::exists(Product::class, 'id'),
         ];
     }
 }
