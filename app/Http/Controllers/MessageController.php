@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Message as EventsMessage;
 use App\Http\Requests\Message\StoreMessageRequest;
 use App\Http\Requests\Message\UpdateMessageRequest;
 use App\Models\ChatUser;
@@ -31,6 +32,33 @@ class MessageController extends ApiController
         }
 
         return $where;
+    }
+
+    public function store(Request $request)
+    {
+        if ($this->store_request && !($this->store_request)->authorize() && AccessUtil::cannot('store', $this->model)) return AccessUtil::errorMessage();
+
+        // данные для создания записи
+        $create_data =   [...$request->validate(
+            ($this->store_request)->rules($request->all())
+        )];
+
+        if ($this->is_auth_id) $create_data[$this->string_user_id] = auth()->id();
+
+        $data = $this->model::create($create_data);
+
+        $this::extendsMutation($data, $request);
+
+        $data = Filter::one($request, $this->model, $data->id);
+
+        EventsMessage::dispatch([
+            'data' => $data,
+            'type' => 'create'
+        ]);
+
+        return new JsonResponse([
+            'data' => $data
+        ], 201);
     }
 
     protected static function extendsMutation($data, $request)

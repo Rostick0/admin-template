@@ -7,6 +7,7 @@ use App\Http\Controllers\ChatUserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OrderingController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
@@ -66,6 +67,7 @@ Route::prefix('v1')
             'properties' => PropertyController::class,
             'property_items' => PropertyItemController::class,
             'reviews' => ReviewController::class,
-            'comments' => CommentController::class
+            'comments' => CommentController::class,
+            'messages' => MessageController::class,
         ]);
     });

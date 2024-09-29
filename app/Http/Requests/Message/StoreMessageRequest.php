@@ -30,6 +30,8 @@ class StoreMessageRequest extends FormRequest
 
         if (auth()->user()->role !== 'admin') {
             $rules['chat_id'] = Rule::exists(ChatUser::class)->where('user_id', auth()->id());
+        } else {
+            $rules['chat_id'] = Rule::exists(ChatUser::class);
         }
 
         if (!isset($args['images']) && !isset($args['files'])) $rules['content'] .= '|required';
