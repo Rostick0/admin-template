@@ -68,4 +68,9 @@ class Product extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    public function chats(): MorphMany
+    {
+        return $this->morphMany(Chat::class, 'chatable');
+    }
 }

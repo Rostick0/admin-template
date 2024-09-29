@@ -2,19 +2,21 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ChatUserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\OrderingController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductUserController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\PropertyItemController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RubricController;
 use App\Http\Controllers\StatisticDayController;
 use App\Http\Controllers\VendorController;
-use App\Models\ProductUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -50,13 +52,16 @@ Route::prefix('v1')
         Route::get('/statistic-days', [StatisticDayController::class, 'index']);
         Route::post('/statistic-days/increment', [StatisticDayController::class, 'increment']);
 
+        Route::apiResource('/chats', ChatController::class)->only(['store']);
+        Route::apiResource('/chat-users', ChatUserController::class)->except(['store']);
+
         Route::apiResources([
             'posts' => PostController::class,
             'rubrics' => RubricController::class,
             'vendors' => VendorController::class,
             'categories' => CategoryController::class,
             'products' => ProductController::class,
-            'product-users' => ProductUser::class,
+            'product-users' => ProductUserController::class,
             'orderings' => OrderingController::class,
             'properties' => PropertyController::class,
             'property_items' => PropertyItemController::class,
