@@ -10,6 +10,7 @@ use App\Models\Message;
 use App\Utils\AccessUtil;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Rostislav\LaravelFilters\Filter;
 use Rostislav\LaravelFilters\Filters\QueryString;
 
@@ -34,33 +35,6 @@ class MessageController extends ApiController
         return $where;
     }
 
-    public function store(Request $request)
-    {
-        if ($this->store_request && !($this->store_request)->authorize() && AccessUtil::cannot('store', $this->model)) return AccessUtil::errorMessage();
-
-        // данные для создания записи
-        $create_data =   [...$request->validate(
-            ($this->store_request)->rules($request->all())
-        )];
-
-        if ($this->is_auth_id) $create_data[$this->string_user_id] = auth()->id();
-
-        $data = $this->model::create($create_data);
-
-        $this::extendsMutation($data, $request);
-
-        $data = Filter::one($request, $this->model, $data->id);
-
-        EventsMessage::dispatch([
-            'data' => $data,
-            'type' => 'create'
-        ]);
-
-        return new JsonResponse([
-            'data' => $data
-        ], 201);
-    }
-
     protected static function extendsMutation($data, $request)
     {
         if ($request->has('images')) {
@@ -82,6 +56,64 @@ class MessageController extends ApiController
         }
     }
 
+    public function store(Request $request)
+    {
+        if (!($this->store_request)->authorize() && AccessUtil::cannot('store', $this->model)) return AccessUtil::errorMessage();
+
+        // данные для создания записи
+        $create_data =   [...$request->validate(
+            ($this->store_request)->rules($request->all())
+        )];
+
+        if ($this->is_auth_id) $create_data[$this->string_user_id] = auth()->id();
+
+        $data = $this->model::create($create_data);
+
+        $this::extendsMutation($data, $request);
+
+        $data = Message::with(QueryString::convertToArray($request->extends))
+            ->find($data->id);
+
+        EventsMessage::dispatch([
+            'data' => $data,
+            'type' => 'create'
+        ]);
+
+        return new JsonResponse([
+            'data' => $data
+        ], 201);
+    }
+
+    public function update(Request $request, int $id)
+    {
+        if (!($this->update_request)->authorize()) return AccessUtil::errorMessage();
+
+        $data = $this->model::findOrFail($id);
+
+        if (AccessUtil::cannot('update', $data)) return AccessUtil::errorMessage();
+
+        $data->update(
+            $request->validate(($this->update_request)->rules([
+                ...$request->all(),
+                'id' => $id
+            ]))
+        );
+
+        $this::extendsMutation($data, $request);
+
+        $data = Message::with(QueryString::convertToArray($request->extends))
+            ->find($data->id);
+
+        EventsMessage::dispatch([
+            'data' => $data,
+            'type' => 'update'
+        ]);
+
+        return new JsonResponse([
+            'data' => $data
+        ]);
+    }
+
     public function read(Request $request, int $id)
     {
         $message = Filter::one($request, new Message, $id, $this::getWhere());
@@ -93,14 +125,16 @@ class MessageController extends ApiController
             ['chat_id', '=', $message->chat_id],
             ['user_id', '!=', auth()->id()],
         ])->update([
-            'is_read' => 1
+            'is_read' => 1,
+            'updated_at' => DB::raw('updated_at')
         ]);
 
         ChatUser::firstWhere([
             ['chat_id', '=', $message->chat_id],
             ['user_id', '=', auth()->id()],
         ])->update([
-            'is_read' => 1
+            'is_read' => 1,
+            'updated_at' => DB::raw('updated_at')
         ]);
 
         return new JsonResponse([

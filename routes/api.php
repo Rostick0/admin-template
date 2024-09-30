@@ -60,6 +60,8 @@ Route::prefix('v1')
         Route::get('/uploader/download', [UploaderController::class, 'download']);
         Route::post('/uploader/upload', [UploaderController::class, 'upload']);
 
+        Route::get('/messages/read/{id}', [MessageController::class, 'read']);
+
         Route::apiResources([
             'posts' => PostController::class,
             'rubrics' => RubricController::class,
