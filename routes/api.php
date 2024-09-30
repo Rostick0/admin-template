@@ -17,6 +17,7 @@ use App\Http\Controllers\PropertyItemController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RubricController;
 use App\Http\Controllers\StatisticDayController;
+use App\Http\Controllers\UploaderController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +56,9 @@ Route::prefix('v1')
 
         Route::apiResource('/chats', ChatController::class)->only(['store']);
         Route::apiResource('/chat-users', ChatUserController::class)->except(['store']);
+
+        Route::get('/uploader/download', [UploaderController::class, 'download']);
+        Route::post('/uploader/upload', [UploaderController::class, 'upload']);
 
         Route::apiResources([
             'posts' => PostController::class,

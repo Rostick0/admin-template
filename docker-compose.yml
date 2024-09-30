@@ -24,6 +24,7 @@ services:
             - mysql
             - soketi
             - redis
+            - rabbitmq
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
@@ -74,6 +75,12 @@ services:
         ports:
             - '${PUSHER_PORT:-6001}:6001'
             - '${PUSHER_METRICS_PORT:-9601}:9601'
+        networks:
+            - sail
+    rabbitmq:
+        image: rabbitmq:3.10.7-management
+        ports:
+            - '${RABBITMQ_PORT:-5672}:5672'
         networks:
             - sail
 networks:
