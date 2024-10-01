@@ -2,13 +2,16 @@
 
 namespace App\Utils\Uploader;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\LazyCollection;
 
 class Json extends AbstractUploader
 {
     public static $extension = 'json';
-    public static function download($data, $uploader)
+    public static function download($data, $random_name_with_extension)
     {
+        $uploader = fn($data) => Storage::append($random_name_with_extension, $data);
+        
         $uploader('[');
         $last_index = count($data);
         foreach ($data as $index => $item) {

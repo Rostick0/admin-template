@@ -45,7 +45,8 @@ class DownloadJob implements ShouldQueue
 
         $this->uploader::download(
             $this->data,
-            fn($data) => Storage::append($random_name_with_extension, $data)
+            $random_name_with_extension
+            // fn($data) => Storage::append($random_name_with_extension, $data)
         );
     }
 }
