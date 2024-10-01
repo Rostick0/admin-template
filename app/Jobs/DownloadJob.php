@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Product;
+use App\Utils\Uploader\AbstractUploader;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -20,9 +21,8 @@ class DownloadJob implements ShouldQueue
      */
     public function __construct(
         protected $data,
-        protected $format
-    )
-    {
+        protected AbstractUploader $uploader
+    ) {
         //
     }
 
@@ -31,18 +31,21 @@ class DownloadJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $extension = 'json';
+        $extension = $this->uploader::$extension;
 
         $date = Carbon::now();
 
         $dir = 'download/file/';
-        $random_name = $dir . $date->format('Y/m/d') . '/' . random_int(1000, 9999) . time() . '.' . $extension;
+        $random_name = $dir . $date->format(format: 'Y/m/d') . '/' . random_int(1000, 9999) . time() . '.' . $extension;
         $random_name_with_extension = 'public/' . $random_name;
 
         Storage::makeDirectory('public/' . $dir . $date->format('Y'));
         Storage::makeDirectory('public/' . $dir . $date->format('Y/m'));
         Storage::makeDirectory('public/' . $dir . $date->format('Y/m/d'));
 
-        Storage::put($random_name_with_extension, json_encode(Product::all()));
+        $this->uploader::download(
+            $this->data,
+            fn($data) => Storage::append($random_name_with_extension, $data)
+        );
     }
 }
