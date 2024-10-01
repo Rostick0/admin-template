@@ -16,9 +16,8 @@ class UploaderController extends Controller
 
     public function download(Request $request)
     {
-        // $var = new Json;
-        $var = new ('App\Utils\Uploader\\' . $request->class);
-        (new DownloadJob(Product::cursor(), $var))->handle();
+        $uploader = new ('App\Utils\Uploader\\' . $request->class);
+        (new DownloadJob(Product::cursor(), $uploader))->handle();
         // DownloadJob::dispatch(Product::cursor(), Json::class);
 
         return new JsonResponse([

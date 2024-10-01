@@ -12,7 +12,7 @@ class Json extends AbstractUploader
         $uploader('[');
         $last_index = count($data);
         foreach ($data as $index => $item) {
-            $uploader(json_encode($item)) . ($last_index - 1 !== $index ? ',' : ''));
+            $uploader(json_encode($item) . ($last_index - 1 !== $index ? ',' : ''));
         }
         $uploader(']');
     }
