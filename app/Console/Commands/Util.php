@@ -25,27 +25,37 @@ class Util extends Command
      */
     public function handle()
     {
-        $folder = 'app/Utils';
+        $folderAndFile = $this->argument('name');
+        $parts = explode('/', $folderAndFile);
 
-        if (!(file_exists($folder) || is_dir($folder))) mkdir('App\Utils');
+        $folderName =  implode('/', array_slice($parts, 0, -1));
+        $fileName = ucfirst($parts[count($parts) - 1]);
 
-        $name = $this->argument('name');
-        $fileName = ucfirst($name) . '.php';
-        $filePath = app_path('Utils/' . $fileName);
-        $namespace = 'App\Utils';
+        $folder = 'app/Utils/' . $folderName;
+
+        if (!(file_exists($folder) || is_dir($folder))) {
+            mkdir($folder, 0755, true);
+        }
+
+        $fullFilePath = $folder . '/' . $fileName . '.php';
+        $namespace = 'App\Utils\\' . str_replace('/', '\\',  $folderName);
 
         $stub = <<<EOF
         <?php
 
         namespace $namespace;
 
-        class $name
+        class $fileName
         {
             // 
         }
         EOF;
 
-        file_put_contents($filePath, $stub);
+        if (file_exists($fullFilePath)) {
+            $this->error('Util allready exists.');
+            return;
+        }
+        file_put_contents($fullFilePath, $stub);
 
         $this->info("Util file $fileName created successfully!");
     }

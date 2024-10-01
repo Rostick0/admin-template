@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Message;
 use App\Models\Review;
+use App\Observers\MessageObserver;
 use App\Observers\ReviewObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -28,6 +30,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Review::observe(ReviewObserver::class);
+        Message::observe(MessageObserver::class);
     }
 
     /**
