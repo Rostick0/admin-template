@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('notices', function (Blueprint $table) {
             $table->id();
+            $table->string('icon')->nullable();
+            $table->string('text')->nullable();
+            $table->boolean('is_read')->default(0);
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('notice_relat_id')->nullable();
+            $table->timestamp('date_publication')->nullable();
             $table->timestamps();
         });
     }

@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::routes(['middleware' => ['jwt']]);
 
+Broadcast::channel('notice.{user_id}', function (User $user, $user_id) {
+    return (int) $user->id === (int) $user_id;
+});
+
 Broadcast::channel('message.{user_id}', function (User $user, $user_id) {
     return (int) $user->id === (int) $user_id;
 });

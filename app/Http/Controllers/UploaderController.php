@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Notice as EventsNotice;
 use App\Http\Requests\Uploader\DownloadUploaderRequest;
 use App\Jobs\DownloadJob;
+use App\Models\Notice;
 use App\Models\Post;
 use App\Models\Product;
 use App\Utils\Uploader\Json;
@@ -21,13 +23,8 @@ class UploaderController extends Controller
     {
         $model =  ('App\Models\\' . $request->model);
         $uploader = new ('App\Utils\Uploader\\' . $request->type);
-        // dd($model);
-        // $product = Product::cur;
-        // $product = new Product();
-        // dd($request->toArray());
-        DownloadJob::dispatch($model, $uploader, $request->toArray());
 
-        // (new DownloadJob(Product::class, $uploader, $request->toArray()))->handle();
+        DownloadJob::dispatch($model, $uploader, $request->toArray(), $request->user());
 
         return new JsonResponse([
             'message' => 'Wait alert for install'

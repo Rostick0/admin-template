@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Events\Notice as EventsNotice;
+use App\Models\Notice;
 use App\Models\Product;
 use App\Utils\Uploader\AbstractUploader;
 // use App\Utils\Uploader\Json;
@@ -30,6 +32,7 @@ class DownloadJob implements ShouldQueue
         protected string $model,
         protected AbstractUploader $uploader,
         protected $request,
+        protected $user,
         protected $fillable_block = [],
         protected $where = [],
     ) {}
@@ -56,5 +59,28 @@ class DownloadJob implements ShouldQueue
             $data,
             $random_name_with_extension
         );
+
+        $notice = Notice::create([
+            'text' =>  'You have file ' . config()->get('app.url') . '/storage/' . $random_name,
+            'user_id' => $this->user['id']
+        ]);
+
+        EventsNotice::dispatch([
+            'data' => $notice,
+            'type' => 'create'
+        ]);
+    }
+
+    public function failed(\Exception $e = null)
+    {
+        $notice = Notice::create([
+            'text' =>  $e->getMessage(),
+            'user_id' => $this->user['id']
+        ]);
+
+        EventsNotice::dispatch([
+            'data' => $notice,
+            'type' => 'create'
+        ]);
     }
 }
