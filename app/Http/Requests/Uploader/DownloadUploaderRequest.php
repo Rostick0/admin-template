@@ -22,7 +22,7 @@ class DownloadUploaderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'class' => 'required|in:Csv,Json,Xml'
+            'type' => 'required|in:Csv,Json,Xml'
         ];
     }
 }

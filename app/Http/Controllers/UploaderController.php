@@ -19,12 +19,13 @@ class UploaderController extends Controller
 
     public function download(DownloadUploaderRequest $request)
     {
-        $uploader = new ('App\Utils\Uploader\\' . $request->class);
-
+        $model =  ('App\Models\\' . $request->model);
+        $uploader = new ('App\Utils\Uploader\\' . $request->type);
+        // dd($model);
         // $product = Product::cur;
         // $product = new Product();
         // dd($request->toArray());
-        DownloadJob::dispatch(Product::class, $uploader, $request->toArray());
+        DownloadJob::dispatch($model, $uploader, $request->toArray());
 
         // (new DownloadJob(Product::class, $uploader, $request->toArray()))->handle();
 
