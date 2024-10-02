@@ -11,7 +11,7 @@ class Json extends AbstractUploader
     public static function download($data, $random_name_with_extension)
     {
         $uploader = fn($data) => Storage::append($random_name_with_extension, $data);
-        
+
         $uploader('[');
         $last_index = count($data);
         foreach ($data as $index => $item) {

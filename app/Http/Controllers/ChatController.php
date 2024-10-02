@@ -16,7 +16,6 @@ class ChatController extends Controller
     {
         $model = $request->model::find($request->id);
 
-        // dd($model->chats()->whereHas());
         $chat = ChatUser::whereHas(
             'chat',
             function (Builder $query) use ($model) {
@@ -52,8 +51,7 @@ class ChatController extends Controller
                 ]);
             }
         )->where('user_id', $request->user()->id)->count();
-        // dd($model->user_id);
-        // dd($model->chats->chat_users()->where('user_id', $request->user()->id));
+
         if ($chat_users || $request->user()->id === $model->user_id) {
             return new JsonResponse([
                 'message' => 'You dont create'

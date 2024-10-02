@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\LazyCollection;
+use Laravel\SerializableClosure\SerializableClosure;
 
 class UploaderController extends Controller
 {
@@ -18,8 +20,13 @@ class UploaderController extends Controller
     public function download(DownloadUploaderRequest $request)
     {
         $uploader = new ('App\Utils\Uploader\\' . $request->class);
-        (new DownloadJob(Product::cursor(), $uploader))->handle();
-        // DownloadJob::dispatch(Product::cursor(), Json::class);
+
+        // $product = Product::cur;
+        // $product = new Product();
+        // dd($request->toArray());
+        DownloadJob::dispatch(Product::class, $uploader, $request->toArray());
+
+        // (new DownloadJob(Product::class, $uploader, $request->toArray()))->handle();
 
         return new JsonResponse([
             'message' => 'Wait alert for install'

@@ -36,8 +36,6 @@ class StatisticDayController extends ApiController
 
     public function index(Request $request)
     {
-        // dd(StatisticDay::first()->stat_relatsable);
-
         $select = [
             'date',
             'stat_relatsable_type',
@@ -60,7 +58,6 @@ class StatisticDayController extends ApiController
             )
             ->groupBy($group_by_params);
 
-        // dd($data->toSql());
         return new JsonResponse(
             $data->paginate($request->limit ?? 7)
         );
