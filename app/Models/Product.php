@@ -65,9 +65,9 @@ class Product extends Model
         return $this->hasMany(ProductPropertyItem::class);
     }
 
-    public function reviews()
+    public function reviews(): HasMany
     {
-        return $this->hasMany(Review::class);
+        return $this->hasMany(Review::class)->limit(20);
     }
 
     public function chats(): MorphMany

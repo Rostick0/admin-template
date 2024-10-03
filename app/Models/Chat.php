@@ -20,4 +20,14 @@ class Chat extends Model
     {
         return $this->hasMany(ChatUser::class);
     }
+
+    public function message_last(): HasMany
+    {
+        return $this->hasMany(Message::class)->latest('id');
+    }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class)->limit(20);
+    }
 }

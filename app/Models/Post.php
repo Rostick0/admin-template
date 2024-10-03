@@ -52,6 +52,6 @@ class Post extends Model
 
     public function comments(): MorphMany
     {
-        return $this->morphMany(Comment::class, 'comment_relatsable');
+        return $this->morphMany(Comment::class, 'comment_relatsable')->limit(20);
     }
 }
