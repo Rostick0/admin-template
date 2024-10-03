@@ -20,6 +20,7 @@ class PostFactory extends Factory
     {
         return [
             'title' => fake()->name(),
+            'description' => fake()->text(random_int(150, 200)),
             'content' => fake()->text(random_int(150, 300)),
             'user_id' => 1,
             'rubric_id' => random_int(1, 4),
