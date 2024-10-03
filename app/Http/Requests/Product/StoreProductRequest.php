@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Product;
 
+use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -24,6 +25,7 @@ class StoreProductRequest extends FormRequest
     {
         $rules = [
             'title' => 'required|max:255',
+            'link_name' => 'required|' . Rule::unique(Product::class),
             'description' => 'required|max:65536',
             'price' => ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
             'old_price' => ['nullable', 'regex:/^\d+(\.\d{1,2})?$/'],

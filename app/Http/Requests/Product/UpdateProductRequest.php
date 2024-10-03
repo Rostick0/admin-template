@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Product;
 
+use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -20,10 +21,11 @@ class UpdateProductRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules($args): array
     {
         return [
             'title' => 'filled|max:255',
+            'link_name' => 'required|' . Rule::unique(Product::class)->ignore($args['id']),
             'description' => 'filled|max:65536',
             'price' => ['filled', 'regex:/^\d+(\.\d{1,2})?$/'],
             'old_price' => ['nullable', 'regex:/^\d+(\.\d{1,2})?$/'],
