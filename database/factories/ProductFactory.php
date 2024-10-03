@@ -18,6 +18,7 @@ class ProductFactory extends Factory
     {
         return [
             'title' => fake()->name(),
+            'link_name' => strtolower(str_replace(' ', '-', fake()->unique()->text(random_int(4, 30)))),
             'description' => fake()->text(random_int(50, 150)),
             'price' => fake()->numberBetween(1000, 50000) / 100,
             'old_price' => fake()->numberBetween(1000, 50000) / 100,
