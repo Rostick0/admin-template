@@ -14,6 +14,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductUserController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\PropertyItemController;
+use App\Http\Controllers\PropertyTypeController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RubricController;
 use App\Http\Controllers\StatisticDayController;
@@ -71,6 +72,7 @@ Route::prefix('v1')
             'product-users' => ProductUserController::class,
             'orderings' => OrderingController::class,
             'properties' => PropertyController::class,
+            'property_types' => PropertyTypeController::class,
             'property_items' => PropertyItemController::class,
             'reviews' => ReviewController::class,
             'comments' => CommentController::class,

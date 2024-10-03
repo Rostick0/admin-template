@@ -15,9 +15,16 @@ class PropertyItem extends Model
         'type',
         'unit',
         'property_id',
+        'property_type_id'
     ];
 
-    public function property(): BelongsTo {
+    public function property(): BelongsTo
+    {
         return $this->belongsTo(Property::class);
+    }
+
+    public function property_type(): BelongsTo
+    {
+        return $this->belongsTo(PropertyType::class);
     }
 }

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Property;
+namespace App\Http\Requests\PropertyType;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePropertyRequest extends FormRequest
+class UpdatePropertyTypeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth()->check();
+        return false;
     }
 
     /**
@@ -22,7 +22,7 @@ class UpdatePropertyRequest extends FormRequest
     public function rules($args): array
     {
         return [
-            'name' => ['filled', 'unique:properties,name,' . $this->$args['id'], 'max:255'],
+            'name' => ['filled', 'unique:property_types,name,' . $this->$args['id'], 'max:255'],
         ];
     }
 }
