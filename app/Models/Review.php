@@ -30,8 +30,13 @@ class Review extends Model
         return $this->belongsTo(Product::class);
     }
 
+    public function images(): MorphMany
+    {
+        return $this->morphMany(ImageRelat::class, 'image_relatsable');
+    }
+
     public function comments(): MorphMany
     {
-        return $this->morphMany(Comment::class, 'comment_relatsable');
+        return $this->morphMany(Comment::class, 'comment_relatsable')->limit(5);
     }
 }
