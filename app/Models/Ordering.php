@@ -20,9 +20,9 @@ class Ordering extends Model
         'user_id',
     ];
 
-    public function product_users(): HasMany
+    public function ordering_products(): HasMany
     {
-        return $this->hasMany(ProductUser::class);
+        return $this->hasMany(OrderingProduct::class);
     }
 
     public function user(): BelongsTo

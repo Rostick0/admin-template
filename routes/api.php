@@ -11,7 +11,6 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OrderingController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProductUserController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\PropertyItemController;
 use App\Http\Controllers\PropertyTypeController;
@@ -69,7 +68,6 @@ Route::prefix('v1')
             'vendors' => VendorController::class,
             'categories' => CategoryController::class,
             'products' => ProductController::class,
-            'product-users' => ProductUserController::class,
             'orderings' => OrderingController::class,
             'properties' => PropertyController::class,
             'property_types' => PropertyTypeController::class,

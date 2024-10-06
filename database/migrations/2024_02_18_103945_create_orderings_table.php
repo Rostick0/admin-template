@@ -1,5 +1,7 @@
 <?php
 
+use App\Enum\OrderingStatusType;
+use App\Utils\EnumFields;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,9 +18,9 @@ return new class extends Migration
             $table->string('name');
             $table->timestamp('date')->nullable();
             $table->string('address');
-            $table->enum('status', ['pending', 'canceled', 'draft', 'completed', 'rejected'])->default('draft');
+            $table->enum('status', EnumFields::getColumn(OrderingStatusType::class))->default(OrderingStatusType::draft);
             $table->string('reason')->nullable();
-            $table->integer('user_id')->nullable();
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

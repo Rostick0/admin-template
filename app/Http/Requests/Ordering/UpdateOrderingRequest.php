@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Ordering;
 
+use App\Enum\OrderingStatusType;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateOrderingRequest extends FormRequest
@@ -11,7 +12,7 @@ class UpdateOrderingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check();
+        return false && auth()->check();
     }
 
     /**
@@ -19,19 +20,23 @@ class UpdateOrderingRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules($args): array
     {
         $rules = [
             'name' => 'filled|max:255',
-            'date' => 'nullable|date',
+            'date' => 'filled|date',
             'address' => 'filled|max:255',
-            'status' => 'filled|in:pending,draft',
+            'status' => 'filled|in:' . implode(',', [OrderingStatusType::canceled->value, OrderingStatusType::draft->value, OrderingStatusType::pending->value]),
+            'product_ids' => ['required', 'regex:/^\d+(,\d+)*$/'],
+            'product_quantity' => ['required', 'regex:/^\d+(,\d+)*$/'],
         ];
 
         if (auth()->user()->role === 'admin') {
-            $rules['status'] = 'filled|in:pending,canceled,draft,completed,rejected';
+            $rules['status'] = 'filled|in:' . implode(',', [OrderingStatusType::working->value, OrderingStatusType::completed->value, OrderingStatusType::rejected->value]);
 
-            $rules['reason'] = 'nullable';
+            if ($args['status'] === OrderingStatusType::rejected->value) {
+                $rules['reason'] = 'required|max:255';
+            }
         }
 
         return $rules;

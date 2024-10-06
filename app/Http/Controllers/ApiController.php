@@ -59,7 +59,7 @@ class ApiController extends Controller
         $this::extendsMutation($data, $request);
 
         return new JsonResponse([
-            'data' => Filter::one($request, $this->model, $data->id, [])
+            'data' => Filter::one($request, $this->model, $data->id)
         ], 201);
     }
 

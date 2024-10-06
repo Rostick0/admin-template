@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Ordering;
 
+use App\Enum\OrderingStatusType;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreOrderingRequest extends FormRequest
@@ -23,9 +24,11 @@ class StoreOrderingRequest extends FormRequest
     {
         $rules = [
             'name' => 'required|max:255',
-            'date' => 'nullable|date',
+            'date' => 'required|date',
             'address' => 'required|max:255',
-            'status' => 'required|in:pending,draft',
+            'status' => 'filled|in:' . implode(',', [OrderingStatusType::canceled->value, OrderingStatusType::draft->value, OrderingStatusType::pending->value]),
+            'product_ids' => ['required', 'regex:/^\d+(,\d+)*$/'],
+            'product_quantity' => ['required', 'regex:/^\d+(,\d+)*$/'],
         ];
 
         if (auth()->user()->role === 'admin') {

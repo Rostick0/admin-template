@@ -6,7 +6,10 @@ use App\Models\Ordering;
 use App\Http\Requests\Ordering\StoreOrderingRequest;
 use App\Http\Requests\Ordering\UpdateOrderingRequest;
 use App\Utils\AccessUtil;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Rostislav\LaravelFilters\Filter;
+use Rostislav\LaravelFilters\Filters\QueryString;
 
 class OrderingController extends ApiController
 {
@@ -18,9 +21,17 @@ class OrderingController extends ApiController
         $this->update_request = new UpdateOrderingRequest;
     }
 
-    public function store(Request $request) {
-        if (auth()->user()?->product_users()->whereNull('ordering_id')->count() == 0) return AccessUtil::errorMessage('Cart empty', 400);
+    protected static function extendsMutation($data, $request)
+    {
+        if ($request->has('product_ids') && $request->has('product_quantity')) {
+            $data->ordering_products()->delete();
+            $ordering_products = array_map(
+                fn($product_id, $quantity) => ['product_id' => $product_id, 'quantity' => $quantity ?? 1],
+                QueryString::convertToArray($request->product_ids),
+                QueryString::convertToArray($request->product_quantity)
+            );
 
-        return parent::store($request);
+            $data->ordering_products()->createMany($ordering_products);
+        }
     }
 }
