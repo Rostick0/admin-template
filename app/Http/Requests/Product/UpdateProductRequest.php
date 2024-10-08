@@ -25,7 +25,7 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'title' => 'filled|max:255',
-            'link_name' => 'required|' . Rule::unique(Product::class)->ignore($args['id']),
+            'link_name' => 'filled|' . Rule::unique(Product::class)->ignore($args['id']),
             'description' => 'filled|max:65536',
             'price' => ['filled', 'regex:/^\d+(\.\d{1,2})?$/'],
             'old_price' => ['nullable', 'regex:/^\d+(\.\d{1,2})?$/'],

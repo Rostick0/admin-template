@@ -16,6 +16,7 @@ class Ordering extends Model
         'date',
         'address',
         'status',
+        'price',
         'reason',
         'user_id',
     ];

@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Message;
+use App\Models\Product;
 use App\Models\Review;
 use App\Observers\MessageObserver;
+use App\Observers\ProductObserver;
 use App\Observers\ReviewObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -31,6 +33,7 @@ class EventServiceProvider extends ServiceProvider
     {
         Review::observe(ReviewObserver::class);
         Message::observe(MessageObserver::class);
+        Product::observe(ProductObserver::class);
     }
 
     /**

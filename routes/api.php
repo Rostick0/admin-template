@@ -11,6 +11,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OrderingController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductDatePriceController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\PropertyItemController;
 use App\Http\Controllers\PropertyTypeController;
@@ -61,6 +62,8 @@ Route::prefix('v1')
         Route::post('/uploader/upload', [UploaderController::class, 'upload']);
 
         Route::get('/messages/read/{id}', [MessageController::class, 'read']);
+
+        Route::get('/product-date-prices', [ProductDatePriceController::class, 'index']);
 
         Route::apiResources([
             'posts' => PostController::class,

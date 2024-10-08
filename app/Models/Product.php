@@ -29,6 +29,8 @@ class Product extends Model
         'date_publication',
     ];
 
+    protected $appends = ['main_image'];
+
     public function files(): MorphMany
     {
         return $this->morphMany(FileRelationship::class, 'file_relable');
@@ -37,6 +39,11 @@ class Product extends Model
     public function images(): MorphMany
     {
         return $this->morphMany(ImageRelat::class, 'image_relatsable');
+    }
+
+    public function getMainImageAttribute()
+    {
+        return $this->images()->with('image')->first();
     }
 
     public function user(): BelongsTo
@@ -73,5 +80,10 @@ class Product extends Model
     public function chats(): MorphMany
     {
         return $this->morphMany(Chat::class, 'chatable');
+    }
+
+    public function date_prices(): HasMany
+    {
+        return $this->hasMany(ProductDatePrice::class);
     }
 }

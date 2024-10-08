@@ -32,6 +32,8 @@ class OrderingController extends ApiController
             );
 
             $data->ordering_products()->createMany($ordering_products);
+
+            // $data->update(['price'=> ]);
         }
     }
 }

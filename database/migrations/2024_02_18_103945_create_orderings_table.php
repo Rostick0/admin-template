@@ -19,6 +19,7 @@ return new class extends Migration
             $table->timestamp('date')->nullable();
             $table->string('address');
             $table->enum('status', EnumFields::getColumn(OrderingStatusType::class))->default(OrderingStatusType::draft);
+            $table->float('price')->default(0);
             $table->string('reason')->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
