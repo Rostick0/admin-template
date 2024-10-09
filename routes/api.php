@@ -9,6 +9,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OrderingController;
+use App\Http\Controllers\OrderingProductController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductDatePriceController;
@@ -64,6 +65,8 @@ Route::prefix('v1')
         Route::get('/messages/read/{id}', [MessageController::class, 'read']);
 
         Route::get('/product-date-prices', [ProductDatePriceController::class, 'index']);
+
+        Route::apiResource('/ordering-products', OrderingProductController::class)->only(['index']);
 
         Route::apiResources([
             'posts' => PostController::class,
