@@ -12,7 +12,7 @@ class UpdateOrderingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false && auth()->check();
+        return auth()->check();
     }
 
     /**
@@ -27,8 +27,8 @@ class UpdateOrderingRequest extends FormRequest
             'date' => 'filled|date',
             'address' => 'filled|max:255',
             'status' => 'filled|in:' . implode(',', [OrderingStatusType::canceled->value, OrderingStatusType::draft->value, OrderingStatusType::pending->value]),
-            'product_ids' => ['required', 'regex:/^\d+(,\d+)*$/'],
-            'product_quantity' => ['required', 'regex:/^\d+(,\d+)*$/'],
+            'product_ids' => ['filled', 'regex:/^\d+(,\d+)*$/'],
+            'product_quantity' => ['filled', 'regex:/^\d+(,\d+)*$/'],
         ];
 
         if (auth()->user()->role === 'admin') {

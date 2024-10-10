@@ -50,7 +50,6 @@ class OrderingController extends ApiController
 
         if (!($this->update_request)->authorize()) return AccessUtil::errorMessage();
 
-        // $ordering = Ordering::findOrFail($id);
         $data = $this->model::findOrFail($id);
 
         if (
