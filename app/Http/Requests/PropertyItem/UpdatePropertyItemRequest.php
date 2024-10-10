@@ -26,6 +26,7 @@ class UpdatePropertyItemRequest extends FormRequest
     {
         return [
             'name' => 'filled|max:255',
+            'is_top' => 'nullable',
             'type' => 'filled|in:checkbox,select,input',
             'unit' => 'filled|max:255',
             'property_id' => 'filled|numeric|' . Rule::exists(Property::class, 'id'),

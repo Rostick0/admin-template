@@ -22,7 +22,7 @@ class UpdatePropertyTypeRequest extends FormRequest
     public function rules($args): array
     {
         return [
-            'name' => ['filled', 'unique:property_types,name,' . $this->$args['id'], 'max:255'],
+            'name' => ['filled', 'unique:property_types,name,' . $args['id'], 'max:255'],
         ];
     }
 }

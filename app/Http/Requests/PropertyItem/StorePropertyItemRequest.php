@@ -26,6 +26,7 @@ class StorePropertyItemRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
+            'is_top' => 'nullable',
             'type' => 'required|in:checkbox,select,input',
             'unit' => 'required|max:255',
             'property_id' => 'required|numeric|' . Rule::exists(Property::class, 'id'),

@@ -12,6 +12,7 @@ class PropertyItem extends Model
 
     protected $fillable = [
         'name',
+        'is_top',
         'type',
         'unit',
         'property_id',
