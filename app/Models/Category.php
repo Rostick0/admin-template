@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Category extends Model
 {
@@ -27,8 +28,8 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id', 'id');
     }
 
-    public function images(): MorphMany
+    public function image(): MorphOne
     {
-        return $this->morphMany(ImageRelat::class, 'image_relatsable');
+        return $this->morphOne(ImageRelat::class, 'image_relatsable');
     }
 }

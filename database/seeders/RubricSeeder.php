@@ -18,22 +18,22 @@ class RubricSeeder extends Seeder
 
         $data = [
             [
-                'name' => 'Компьютеры',
+                'name' => 'Computers',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
-                'name' => 'Смартфоны',
+                'name' => 'Smartphones',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
-                'name' => 'Бытовая техника',
+                'name' => 'Household appliances',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
-                'name' => 'Разное',
+                'name' => 'Various',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
