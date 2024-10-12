@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PropertyItem extends Model
 {
@@ -24,8 +25,8 @@ class PropertyItem extends Model
         return $this->belongsTo(Property::class);
     }
 
-    public function property_type(): BelongsTo
+    public function property_categories(): HasMany
     {
-        return $this->belongsTo(PropertyType::class);
+        return $this->hasMany(PropertyCategory::class);
     }
 }

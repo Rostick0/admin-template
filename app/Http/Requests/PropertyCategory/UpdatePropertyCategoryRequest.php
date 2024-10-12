@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Requests\PropertyType;
+namespace App\Http\Requests\PropertyCategory;
 
+use App\Models\Category;
+use App\Models\PropertyItem;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UpdatePropertyTypeRequest extends FormRequest
+class UpdatePropertyCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,10 +22,11 @@ class UpdatePropertyTypeRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules($args): array
+    public function rules(): array
     {
         return [
-            'name' => ['filled', 'unique:property_types,name,' . $args['id'], 'max:255'],
+            'property_item_id' => 'filled|numeric|' . Rule::exists(PropertyItem::class, 'id'),
+            'category_id' => 'filled|numeric|' . Rule::exists(Category::class, 'id'),
         ];
     }
 }

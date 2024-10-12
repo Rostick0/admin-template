@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Requests\PropertyType;
+namespace App\Http\Requests\PropertyCategory;
 
+use App\Models\Category;
+use App\Models\PropertyItem;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StorePropertyTypeRequest extends FormRequest
+class StorePropertyCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +25,8 @@ class StorePropertyTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:property_types,name|max:255',
+            'property_item_id' => 'required|numeric|' . Rule::exists(PropertyItem::class, 'id'),
+            'category_id' => 'required|numeric|' . Rule::exists(Category::class, 'id'),
         ];
     }
 }
