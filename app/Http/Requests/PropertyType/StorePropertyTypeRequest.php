@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\PropertyItem;
+namespace App\Http\Requests\PropertyType;
 
-use App\Models\Property;
-use App\Models\PropertyType;
+use App\Models\Category;
+use App\Models\PropertyItem;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdatePropertyItemRequest extends FormRequest
+class StorePropertyTypeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +25,7 @@ class UpdatePropertyItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'filled|max:255',
-            'is_top' => 'nullable',
-            'type' => 'filled|in:checkbox,select,input',
-            'unit' => 'filled|max:255',
-            'property_id' => 'filled|numeric|' . Rule::exists(Property::class, 'id'),
-            'property_type_id' => 'required|numeric|' . Rule::exists(PropertyType::class, 'id'),
+            'name' => ['required', Rule::unique(PropertyItem::class), 'max:255'],
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\PropertyItem;
 
 use App\Models\Property;
+use App\Models\PropertyType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -29,6 +30,7 @@ class StorePropertyItemRequest extends FormRequest
             'type' => 'required|in:checkbox,select,input',
             'unit' => 'required|max:255',
             'property_id' => 'required|numeric|' . Rule::exists(Property::class, 'id'),
+            'property_type_id' => 'required|numeric|' . Rule::exists(PropertyType::class, 'id'),
         ];
     }
 }

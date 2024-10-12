@@ -25,6 +25,11 @@ class PropertyItem extends Model
         return $this->belongsTo(Property::class);
     }
 
+
+    public function property_type(): BelongsTo
+    {
+        return $this->belongsTo(PropertyType::class);
+    }
     public function property_categories(): HasMany
     {
         return $this->hasMany(PropertyCategory::class);

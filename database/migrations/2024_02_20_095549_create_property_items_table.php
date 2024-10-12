@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('type', EnumFields::getColumn(PropertyItemType::class));
             $table->string('unit')->nullable();
             $table->foreignId('property_id')->references('id')->on('properties')->onDelete('cascade');
+            $table->foreignId('property_type_id')->references('id')->on('property_types')->onDelete('cascade');
             $table->boolean('is_top')->default(0);
             $table->timestamps();
         });
