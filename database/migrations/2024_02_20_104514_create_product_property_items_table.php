@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('product_property_items', function (Blueprint $table) {
             $table->id();
-            $table->string('value');
+            $table->string('value')->nullable();
             $table->foreignId('property_item_id')->references('id')->on('property_items')->onDelete('cascade');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();

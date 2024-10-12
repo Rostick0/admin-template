@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->enum('type', EnumFields::getColumn(PropertyItemType::class));
+            $table->string('value')->nullable();
             $table->string('unit')->nullable();
             $table->foreignId('property_id')->references('id')->on('properties')->onDelete('cascade');
             $table->foreignId('property_type_id')->references('id')->on('property_types')->onDelete('cascade');

@@ -15,6 +15,7 @@ class PropertyItem extends Model
         'name',
         'is_top',
         'type',
+        'value',
         'unit',
         'property_id',
         'property_type_id'
