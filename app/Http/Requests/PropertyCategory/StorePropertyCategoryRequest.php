@@ -3,7 +3,7 @@
 namespace App\Http\Requests\PropertyCategory;
 
 use App\Models\Category;
-use App\Models\PropertyItem;
+use App\Models\Property;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -25,7 +25,7 @@ class StorePropertyCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'property_item_id' => 'required|numeric|' . Rule::exists(PropertyItem::class, 'id'),
+            'property_id' => 'required|numeric|' . Rule::exists(Property::class, 'id'),
             'category_id' => 'required|numeric|' . Rule::exists(Category::class, 'id'),
         ];
     }

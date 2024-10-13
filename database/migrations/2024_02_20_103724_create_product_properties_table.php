@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_property_items', function (Blueprint $table) {
+        Schema::create('product_properties', function (Blueprint $table) {
             $table->id();
             $table->string('value')->nullable();
-            $table->foreignId('property_item_id')->references('id')->on('property_items')->onDelete('cascade');
+            $table->foreignId('property_id')->references('id')->on('properties')->onDelete('cascade');
+            $table->foreignId('property_value_id')->nullable();
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_property_items');
+        Schema::dropIfExists('product_properties');
     }
 };

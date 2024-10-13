@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\PropertyType;
 
-use App\Models\PropertyItem;
+use App\Models\PropertyType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -24,7 +24,7 @@ class UpdatePropertyTypeRequest extends FormRequest
     public function rules($args): array
     {
         return [
-            'name' => ['filled', Rule::unique(PropertyItem::class)->ignore($args['id']), 'max:255'],
+            'name' => ['filled', Rule::unique(PropertyType::class)->ignore($args['id']), 'max:255'],
         ];
     }
 }

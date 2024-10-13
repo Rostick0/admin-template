@@ -67,9 +67,9 @@ class Product extends Model
         return $this->morphMany(StatisticDay::class, 'stat_relatsable');
     }
 
-    public function product_property_item(): HasMany
+    public function product_properties(): HasMany
     {
-        return $this->hasMany(ProductPropertyItem::class);
+        return $this->hasMany(ProductProperty::class);
     }
 
     public function reviews(): HasMany

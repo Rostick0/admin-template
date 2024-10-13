@@ -15,8 +15,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductDatePriceController;
 use App\Http\Controllers\PropertyCategoryController;
 use App\Http\Controllers\PropertyController;
-use App\Http\Controllers\PropertyItemController;
 use App\Http\Controllers\PropertyTypeController;
+use App\Http\Controllers\PropertyValueController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RubricController;
 use App\Http\Controllers\StatisticDayController;
@@ -79,7 +79,7 @@ Route::prefix('v1')
             'properties' => PropertyController::class,
             'property_types' => PropertyTypeController::class,
             'property_categories' => PropertyCategoryController::class,
-            'property_items' => PropertyItemController::class,
+            // 'property_values' => PropertyValueController::class,
             'reviews' => ReviewController::class,
             'comments' => CommentController::class,
             'messages' => MessageController::class,

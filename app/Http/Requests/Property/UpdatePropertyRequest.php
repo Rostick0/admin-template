@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Property;
 
+use App\Models\PropertyType;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdatePropertyRequest extends FormRequest
 {
@@ -23,6 +25,10 @@ class UpdatePropertyRequest extends FormRequest
     {
         return [
             'name' => ['filled', 'unique:properties,name,' . $args['id'], 'max:255'],
+            'is_top' => 'nullable',
+            'type' => 'filled|in:checkbox,select,input',
+            'unit' => 'filled|max:255',
+            'property_type_id' => 'filled|numeric|' . Rule::exists(PropertyType::class, 'id'),
         ];
     }
 }

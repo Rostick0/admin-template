@@ -2,7 +2,7 @@
 
 namespace App\Enum;
 
-enum PropertyItemType: string
+enum PropertyFieldType: string
 {
     case checkbox = "checkbox";
     case select = "select";

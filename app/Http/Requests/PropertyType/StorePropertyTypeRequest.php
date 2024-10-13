@@ -3,7 +3,7 @@
 namespace App\Http\Requests\PropertyType;
 
 use App\Models\Category;
-use App\Models\PropertyItem;
+use App\Models\PropertyType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -25,7 +25,7 @@ class StorePropertyTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', Rule::unique(PropertyItem::class), 'max:255'],
+            'name' => ['required', Rule::unique(PropertyType::class), 'max:255'],
         ];
     }
 }

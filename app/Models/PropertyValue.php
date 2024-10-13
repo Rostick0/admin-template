@@ -6,22 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class PropertyCategory extends Model
+class PropertyValue extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'property_id',
-        'category_id'
+        'value',
+        'property_id'
     ];
 
     public function property(): BelongsTo
     {
         return $this->belongsTo(Property::class);
-    }
-
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class);
     }
 }

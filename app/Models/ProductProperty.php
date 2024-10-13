@@ -5,20 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class PropertyItem extends Model
+class ProductProperty extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'is_top',
-        'type',
         'value',
-        'unit',
         'property_id',
-        'property_type_id'
+        'property_value_id',
+        'product_id',
     ];
 
     public function property(): BelongsTo
@@ -26,13 +22,13 @@ class PropertyItem extends Model
         return $this->belongsTo(Property::class);
     }
 
-
-    public function property_type(): BelongsTo
+    public function property_value(): BelongsTo
     {
-        return $this->belongsTo(PropertyType::class);
+        return $this->belongsTo(PropertyValue::class);
     }
-    public function property_categories(): HasMany
+
+    public function product(): BelongsTo
     {
-        return $this->hasMany(PropertyCategory::class);
+        return $this->belongsTo(Product::class);
     }
 }
