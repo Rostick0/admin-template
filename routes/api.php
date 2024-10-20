@@ -58,8 +58,8 @@ Route::prefix('v1')
         Route::get('/statistic-days', [StatisticDayController::class, 'index']);
         Route::post('/statistic-days/increment', [StatisticDayController::class, 'increment']);
 
-        Route::apiResource('/chats', ChatController::class)->only(['store', 'show']);
-        Route::apiResource('/chat-users', ChatUserController::class)->except(['store']);
+        Route::apiResource('/chats', ChatController::class)->only(['index', 'store', 'show']);
+        Route::apiResource('/chat-users', ChatUserController::class)->except(['index', 'store']);
 
         Route::get('/uploader/download', [UploaderController::class, 'download']);
         Route::post('/uploader/upload', [UploaderController::class, 'upload']);

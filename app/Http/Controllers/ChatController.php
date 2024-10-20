@@ -14,6 +14,8 @@ use Rostislav\LaravelFilters\Filter;
 class ChatController extends Controller
 {
     protected $model;
+    protected $fillable_block = [];
+    protected $q_request  = [];
     
     public function __construct()
     {
@@ -23,6 +25,13 @@ class ChatController extends Controller
     protected static function getWhere(Request $request)
     {
         return [];
+    }
+
+    public function index(Request $request)
+    {
+        return new JsonResponse(
+            Filter::all($request, $this->model, $this->fillable_block, $this::getWhere($request), $this->q_request)
+        );
     }
 
     public function store(StoreChatRequst $request)
