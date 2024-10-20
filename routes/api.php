@@ -44,7 +44,8 @@ Route::prefix('v1')
             Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:300,1');
             Route::post('/register', [AuthController::class, 'register']);
 
-            Route::group(['middleware' => 'jwt'], function () {
+            // 'middleware' => 'jwt'
+            Route::group([], function () {
                 Route::post('/logout', [AuthController::class, 'logout']);
                 Route::post('/refresh', [AuthController::class, 'refresh']);
                 Route::get('/me', [AuthController::class, 'me']);
@@ -57,7 +58,7 @@ Route::prefix('v1')
         Route::get('/statistic-days', [StatisticDayController::class, 'index']);
         Route::post('/statistic-days/increment', [StatisticDayController::class, 'increment']);
 
-        Route::apiResource('/chats', ChatController::class)->only(['store']);
+        Route::apiResource('/chats', ChatController::class)->only(['store', 'show']);
         Route::apiResource('/chat-users', ChatUserController::class)->except(['store']);
 
         Route::get('/uploader/download', [UploaderController::class, 'download']);
@@ -68,6 +69,8 @@ Route::prefix('v1')
         Route::get('/product-date-prices', [ProductDatePriceController::class, 'index']);
 
         Route::apiResource('/ordering-products', OrderingProductController::class)->only(['index']);
+
+        Route::get('/reviews/product/{id}', [ReviewController::class, 'showByProductId']);
 
         Route::apiResources([
             'posts' => PostController::class,

@@ -15,8 +15,15 @@ class Vendor extends Model
         'description',
     ];
 
+    protected $appends = ['main_image'];
+
     public function images(): MorphMany
     {
         return $this->morphMany(ImageRelat::class, 'image_relatsable');
+    }
+
+    public function getMainImageAttribute()
+    {
+        return $this->images()->with('image')->first();
     }
 }

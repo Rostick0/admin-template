@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         try {
-            if (!auth()->check() && $user = User::find(1)) {
+            if (!auth()->check() && $user = User::find(2)) {
                 auth()->setUser($user);
             }
         } catch (Exception $e) {

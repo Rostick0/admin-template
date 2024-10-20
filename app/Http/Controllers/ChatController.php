@@ -9,9 +9,22 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Rostislav\LaravelFilters\Filter;
 
 class ChatController extends Controller
 {
+    protected $model;
+    
+    public function __construct()
+    {
+        $this->model = new Chat;
+    }
+
+    protected static function getWhere(Request $request)
+    {
+        return [];
+    }
+
     public function store(StoreChatRequst $request)
     {
         $model = $request->model::find($request->id);
@@ -75,6 +88,13 @@ class ChatController extends Controller
 
         return new JsonResponse([
             'message' => 'created'
+        ]);
+    }
+
+    public function show(Request $request, int $id)
+    {
+        return new JsonResponse([
+            'data' => Filter::one($request, $this->model, $id, $this::getWhere($request))
         ]);
     }
 }
