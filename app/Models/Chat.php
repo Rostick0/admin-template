@@ -22,9 +22,14 @@ class Chat extends Model
         return $this->hasMany(ChatUser::class);
     }
 
-    public function message_last(): HasMany
+    public function chat_interlocutor(): HasOne
     {
-        return $this->hasMany(Message::class)->latest('id');
+        return $this->hasOne(ChatUser::class)->whereNot('user_id', auth()->id())->latest();
+    }
+
+    public function message_last(): HasOne
+    {
+        return $this->hasOne(Message::class)->latest('id');
     }
 
     public function messages(): HasMany
