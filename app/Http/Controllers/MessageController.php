@@ -71,7 +71,7 @@ class MessageController extends ApiController
 
         $this::extendsMutation($data, $request);
 
-        $data = Message::with(QueryString::convertToArray($request->extends))
+        $data = Message::with(['images.image', 'files.file', 'chat.chat_interlocutor.user'])
             ->find($data->id);
 
         EventsMessage::dispatch([
@@ -101,7 +101,7 @@ class MessageController extends ApiController
 
         $this::extendsMutation($data, $request);
 
-        $data = Message::with(QueryString::convertToArray($request->extends))
+        $data = Message::with(['images.image', 'files.file', 'chat.chat_interlocutor.user'])
             ->find($data->id);
 
         EventsMessage::dispatch([
