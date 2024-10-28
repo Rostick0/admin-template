@@ -34,6 +34,6 @@ class Chat extends Model
 
     public function messages(): HasMany
     {
-        return $this->hasMany(Message::class)->limit(20);
+        return $this->hasMany(Message::class)->limit(20)->orderByDesc('id');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Post;
 
+use App\Models\Post;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -24,6 +25,7 @@ class StorePostRequest extends FormRequest
     {
         $rules = [
             'title' => 'required|max:255',
+            'link_name' => 'required|' . Rule::unique(Post::class),
             'description' => 'nullable|max:255',
             'content' => 'required|max:65536',
             'rubric_id' => 'required|' . Rule::exists('rubrics', 'id'),

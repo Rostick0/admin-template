@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Rubric;
 
+use App\Models\Rubric;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -20,10 +21,11 @@ class UpdateRubricRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules($args): array
     {
         return [
             'name' => ['filled', 'unique:rubrics,name,' . $this->rubric, 'max:255'],
+            'link_name' => 'filled|' . Rule::unique(Rubric::class)->ignore($args['id']),
         ];
     }
 }

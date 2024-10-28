@@ -18,22 +18,26 @@ class CategorySeeder extends Seeder
 
         $data = [
             [
-                'name' => 'Computers',
+                'name' => 'Компьютеры',
+                'link_name' => 'computers',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
-                'name' => 'Smartphones',
+                'name' => 'Смартфоны',
+                'link_name' => 'smartphones',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
-                'name' => 'Household appliances',
+                'name' => 'Бытовая техника',
+                'link_name' => 'household_appliances',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
-                'name' => 'Leisure and entertainment',
+                'name' => 'Разное',
+                'link_name' => 'leisure_andentertainment',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],

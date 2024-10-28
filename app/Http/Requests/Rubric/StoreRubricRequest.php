@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Rubric;
 
+use App\Models\Rubric;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -24,6 +25,7 @@ class StoreRubricRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:rubrics,name|max:255',
+            'link_name' => 'required|' . Rule::unique(Rubric::class),
         ];
     }
 }

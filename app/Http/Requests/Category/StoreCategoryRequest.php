@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Category;
 
+use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -24,6 +25,7 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
+            'link_name' => 'required|' . Rule::unique(Category::class),
             'description' => 'nullable|max:65536',
             'parent_id' => 'nullable|numeric|' . Rule::exists('categories', 'id'),
         ];

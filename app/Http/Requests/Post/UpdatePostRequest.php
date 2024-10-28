@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Post;
 
+use App\Models\Post;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -20,10 +21,11 @@ class UpdatePostRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules($args): array
     {
         $rules = [
             'title' => 'filled|max:255',
+            'link_name' => 'filled|' . Rule::unique(Post::class)->ignore($args['id']),
             'description' => 'nullable|max:255',
             'content' => 'filled|max:65536',
             'rubric_id' => 'filled|' . Rule::exists('rubrics', 'id'),

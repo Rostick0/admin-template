@@ -10,6 +10,7 @@ class Rubric extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'link_name'
     ];
 }

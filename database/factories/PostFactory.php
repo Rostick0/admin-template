@@ -20,6 +20,7 @@ class PostFactory extends Factory
     {
         return [
             'title' => fake()->name(),
+            'link_name' => strtolower(str_replace(' ', '-', fake()->unique()->text(random_int(5, 30)))),
             'description' => fake()->text(random_int(150, 200)),
             'content' => fake()->text(random_int(150, 300)),
             'user_id' => 1,
