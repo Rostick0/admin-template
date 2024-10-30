@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Utils\AccessUtil;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Rostislav\LaravelFilters\Filter;
 
 class CommentController extends ApiController
 {
@@ -36,7 +37,7 @@ class CommentController extends ApiController
         $this::extendsMutation($data, $request);
 
         return new JsonResponse([
-            'data' => $data,
+            'data' => Filter::one($request, $this->model, $data->id)
         ], 201);
     }
 }
