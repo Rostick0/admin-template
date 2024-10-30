@@ -19,10 +19,11 @@ class ProductController extends ApiController
         $this->is_auth_id = true;
         $this->store_request = new StoreProductRequest;
         $this->update_request = new UpdateProductRequest;
-        // $this->q_request = [
-        //     ['title', 'LIKE'],
-        //     ['name', 'LIKE', 'model_cars_show'],
-        // ];
+        $this->q_request = [
+            ['title', 'LIKE'],
+            ['name', 'LIKE', 'category'],
+            ['name', 'LIKE', 'vendor'],
+        ];
     }
 
     protected static function extendsMutation($data, $request)
