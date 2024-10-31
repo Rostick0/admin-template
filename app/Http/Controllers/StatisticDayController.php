@@ -27,7 +27,7 @@ class StatisticDayController extends ApiController
         if (auth()->user()?->role !== 'admin' || (auth()->user()?->role === 'admin' && !$request->for_admin)) {
             // $where[] = ['id', '=', auth()?->id(), 'product.user'];
             // $where[] = ['id', '=', auth()?->id(), 'post.user'];
-            $where[] = ['id', '=', auth()?->id(), 'stat_relatsable'];
+            $where[] = ['id', '=', auth()?->id(), 'stat_relatsable.user'];
             // stat_relatsable
         }
 

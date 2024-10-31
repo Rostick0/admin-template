@@ -25,6 +25,18 @@ class OrderingController extends ApiController
         $this->update_request = new UpdateOrderingRequest;
     }
 
+    protected static function getWhere(Request $request = null)
+    {
+        $where = [];
+
+        if (auth()?->user()?->role !== 'admin') {
+            $where[] = ['user_id', '=', auth()?->id()];
+        }
+
+        return $where;
+    }
+
+
     protected static function extendsMutation($data, $request)
     {
         if ($request->has('product_ids')) {
@@ -44,6 +56,8 @@ class OrderingController extends ApiController
             $data->update(['price' => $price[0]['SUM']]);
         }
     }
+
+
 
     public function update(Request $request, int $id)
     {

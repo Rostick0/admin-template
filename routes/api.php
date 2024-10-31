@@ -21,6 +21,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RubricController;
 use App\Http\Controllers\StatisticDayController;
 use App\Http\Controllers\UploaderController;
+use App\Http\Controllers\UserStatisticController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -71,6 +72,8 @@ Route::prefix('v1')
         Route::apiResource('/ordering-products', OrderingProductController::class)->only(['index']);
 
         Route::get('/reviews/product/{id}', [ReviewController::class, 'showByProductId']);
+
+        Route::apiResource('/user-statistics', UserStatisticController::class)->only(['index']);
 
         Route::apiResources([
             'posts' => PostController::class,
