@@ -29,7 +29,7 @@ class Product extends Model
         'date_publication',
     ];
 
-    protected $appends = ['main_image'];
+    protected $appends = ['main_image', 'with_you_review'];
 
     public function files(): MorphMany
     {
@@ -44,6 +44,11 @@ class Product extends Model
     public function getMainImageAttribute()
     {
         return $this->images()->with('image')->first();
+    }
+
+    public function getWithYouReviewAttribute()
+    {
+        return $this->reviews()->firstWhere('user_id', auth()->id())->count() > 0;
     }
 
     public function user(): BelongsTo

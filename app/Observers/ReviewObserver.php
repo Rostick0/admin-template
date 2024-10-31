@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Models\Product;
 use App\Models\Review;
 
 class ReviewObserver
@@ -21,9 +22,17 @@ class ReviewObserver
      */
     public function updated(Review $review): void
     {
+
+
         if ($review->mark !== $review->getOriginal('mark')) {
             $review->product()->update([
-                'raiting' => $review->product->reviews()->average('mark')
+                'raiting' => number_format($review->product->reviews()->average('mark'), 2)
+            ]);
+
+            $product = $review->product;
+            $product->user()->update([
+                'raiting' => number_format(Product::where('user_id', $product->user->id)
+                    ->average('raiting'), 2),
             ]);
         }
     }

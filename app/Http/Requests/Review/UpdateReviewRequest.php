@@ -28,7 +28,7 @@ class UpdateReviewRequest extends FormRequest
             'dignities' => 'nullable|max:300',
             'disadvantages' => 'nullable|max:300',
             'comment' => 'nullable|max:300',
-            'product_id' => 'filled|' . Rule::exists(Product::class, 'id'),
+            // 'product_id' => 'filled|' . Rule::exists(Product::class, 'id'),
         ];
     }
 }
