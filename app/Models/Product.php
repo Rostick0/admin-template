@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -29,7 +30,7 @@ class Product extends Model
         'date_publication',
     ];
 
-    protected $appends = ['main_image', 'with_you_review'];
+    protected $appends = ['main_image'];
 
     public function files(): MorphMany
     {
@@ -46,9 +47,11 @@ class Product extends Model
         return $this->images()->with('image')->first();
     }
 
-    public function getWithYouReviewAttribute()
+    public function my_review(): HasOne
     {
-        return $this->reviews()->firstWhere('user_id', auth()->id())->count() > 0;
+        return $this->hasOne(Review::class)
+            ->where('user_id', auth()->id())
+            ->latest('id');
     }
 
     public function user(): BelongsTo
