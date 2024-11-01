@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\OrderingStatusType;
+use App\Enum\StatusType;
 use App\Models\Ordering;
 use App\Models\OrderingProduct;
 use App\Models\Review;
@@ -28,6 +30,24 @@ class UserStatisticController extends Controller
                 ->distinct('product_id')
                 ->count()
         ];
+
+        return new JsonResponse([
+            'data' => $data
+        ]);
+    }
+
+    public function orderings(Request $request)
+    {
+        $user_id = ['user_id', '=', auth()->id()];
+        // ['status', '=', OrderingStatusType::completed->value]
+
+        $data =
+            (
+                Filter::query($request, new Ordering, [], [$user_id])
+                ->select(DB::raw('DATE(created_at) as created_at, SUM(price) as sum_total, COUNT(*) as sum_orderings'))
+                ->groupBy('created_at')
+                ->get()
+            );
 
         return new JsonResponse([
             'data' => $data

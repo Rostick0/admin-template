@@ -74,7 +74,9 @@ Route::prefix('v1')
         Route::get('/reviews/product/{id}', [ReviewController::class, 'showByProductId']);
 
         Route::apiResource('/user-statistics', UserStatisticController::class)->only(['index']);
+        Route::get('/user-statistics/orderings', [UserStatisticController::class, 'orderings']);
 
+        
         Route::apiResources([
             'posts' => PostController::class,
             'rubrics' => RubricController::class,
