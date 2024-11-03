@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Enum\OrderingStatusType;
 use App\Enum\StatusType;
+use App\Http\Requests\UserStatisticController\OrderingsUserStatisticController;
 use App\Models\Ordering;
 use App\Models\OrderingProduct;
 use App\Models\Review;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,18 +38,26 @@ class UserStatisticController extends Controller
         ]);
     }
 
-    public function orderings(Request $request)
+    public function orderings(OrderingsUserStatisticController $request)
     {
+
+
         $user_id = ['user_id', '=', auth()->id()];
         // ['status', '=', OrderingStatusType::completed->value]
+        $date = ['date', '>=', Carbon::now()->subYear()->format('Y-m-d')];
 
-        $data =
-            (
-                Filter::query($request, new Ordering, [], [$user_id])
-                ->select(DB::raw('DATE(created_at) as created_at, SUM(price) as sum_total, COUNT(*) as sum_orderings'))
-                ->groupBy('created_at')
-                ->get()
-            );
+        $period_sql = ($request->period ?? 'DATE') . '(created_at)';
+
+        // dd(Carbon::now()->subYear());
+        $data = Filter::query([], new Ordering, [], [$user_id, $date])
+            ->select(DB::raw($period_sql . ' as date, SUM(price) as sum_total, COUNT(*) as sum_orderings'))
+            // ->groupBy('date')
+            ->groupBy(DB::raw($period_sql))
+            ->orderBy('date')
+            ->limit(366)
+            // ->toSql()
+            ->get()
+        ;
 
         return new JsonResponse([
             'data' => $data
