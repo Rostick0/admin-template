@@ -24,7 +24,8 @@ class LoginAuthRequest extends FormRequest
     {
         return [
             // 'phone' => 'required_without:email|' . Rule::exists('users', 'phone'),
-            'email' => 'required_without:phone|email|' . Rule::exists('users', 'email'),
+            // 'email' => 'required_without:phone|email|' . Rule::exists('users', 'email'),
+            'email' => 'required|email|' . Rule::exists('users', 'email'),
             'password' => 'required|min:6',
         ];
     }

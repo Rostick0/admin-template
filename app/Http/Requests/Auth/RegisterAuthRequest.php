@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Enum\EmailCodeType;
+use App\Models\EmailCode;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class RegisterAuthRequest extends FormRequest
 {
@@ -23,8 +26,11 @@ class RegisterAuthRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'nullable|email|unique:users,email|max:255',
+            'email' => 'required|email|unique:users,email|max:255',
             'password' => 'required|min:6|max:255',
+            'code' => 'required|' . Rule::exists(EmailCode::class, 'code')
+                ->where('email', $this->email)
+                ->where('type', EmailCodeType::register->value),
         ];
     }
 }

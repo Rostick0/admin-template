@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ChatUserController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\EmailCodeController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MessageController;
@@ -76,7 +77,8 @@ Route::prefix('v1')
         Route::apiResource('/user-statistics', UserStatisticController::class)->only(['index']);
         Route::get('/user-statistics/orderings', [UserStatisticController::class, 'orderings']);
 
-        
+        Route::apiResource('/email-code', EmailCodeController::class)->only(['store']);
+
         Route::apiResources([
             'posts' => PostController::class,
             'rubrics' => RubricController::class,
