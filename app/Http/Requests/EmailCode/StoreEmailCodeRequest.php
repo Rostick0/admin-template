@@ -31,9 +31,12 @@ class StoreEmailCodeRequest extends FormRequest
             // 'g_recaptcha_response' => 'required|captcha'
         ];
 
-        if ($this->request->get('type') === 'login') {
+        if ($this->request->get('type') === EmailCodeType::login->value) {
             $rules['email'] = $rules['email'] . '|' . Rule::exists(User::class, 'email');
-        } else if ($this->request->get('type') === 'register') {
+        } else if ($this->request->get('type') === EmailCodeType::update_email->value) {
+            $rules['email'] = $rules['email'] . '|' . Rule::exists(User::class, 'email')->where('id', $this->user()->id);
+            $rules['email_new'] =  Rule::unique(User::class, 'email');
+        } else if ($this->request->get('type') === EmailCodeType::register->value) {
             $rules['email'] = $rules['email'] . '|' . Rule::unique(User::class, 'email');
         }
 

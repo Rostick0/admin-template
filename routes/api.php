@@ -22,6 +22,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RubricController;
 use App\Http\Controllers\StatisticDayController;
 use App\Http\Controllers\UploaderController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserStatisticController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Http\Request;
@@ -47,7 +48,7 @@ Route::prefix('v1')
             Route::post('/register', [AuthController::class, 'register']);
 
             // 'middleware' => 'jwt'
-            Route::group([], function () {
+            Route::group(['middleware' => 'jwt'], function () {
                 Route::post('/logout', [AuthController::class, 'logout']);
                 Route::post('/refresh', [AuthController::class, 'refresh']);
                 Route::get('/me', [AuthController::class, 'me']);
@@ -76,6 +77,8 @@ Route::prefix('v1')
 
         Route::apiResource('/user-statistics', UserStatisticController::class)->only(['index']);
         Route::get('/user-statistics/orderings', [UserStatisticController::class, 'orderings']);
+
+        Route::patch('/users/email-update', [UserController::class, 'updateEmail']);
 
         Route::apiResource('/email-code', EmailCodeController::class)->only(['store']);
 
