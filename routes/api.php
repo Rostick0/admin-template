@@ -20,6 +20,7 @@ use App\Http\Controllers\PropertyTypeController;
 use App\Http\Controllers\PropertyValueController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RubricController;
+use App\Http\Controllers\SlideController;
 use App\Http\Controllers\StatisticDayController;
 use App\Http\Controllers\UploaderController;
 use App\Http\Controllers\UserController;
@@ -96,5 +97,6 @@ Route::prefix('v1')
             'reviews' => ReviewController::class,
             'comments' => CommentController::class,
             'messages' => MessageController::class,
+            'slides' => SlideController::class,
         ]);
     });
