@@ -50,8 +50,20 @@ class Product extends Model
     public function my_review(): HasOne
     {
         return $this->hasOne(Review::class)
-            ->where('user_id', auth()->id())
+            ->where(
+                'user_id',
+                auth()->id()
+            )
             ->latest('id');
+    }
+
+    public function my_buy(): HasOne
+    {
+        return $this->hasOne(OrderingProduct::class)
+            ->whereHas(
+                'ordering',
+                fn($query) => $query->where('user_id', auth()->id())
+            );
     }
 
     public function user(): BelongsTo

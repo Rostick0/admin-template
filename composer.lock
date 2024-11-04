@@ -3990,16 +3990,16 @@
         },
         {
             "name": "rostislav/laravel-filters",
-            "version": "v1.0.5.2",
+            "version": "v1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Rostick0/laravel-filters.git",
-                "reference": "3de9862cf46fc0ec3aae6237e1a23278b003349f"
+                "reference": "6f9919040ecc692c6db25155bd04b1d729e94d92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Rostick0/laravel-filters/zipball/3de9862cf46fc0ec3aae6237e1a23278b003349f",
-                "reference": "3de9862cf46fc0ec3aae6237e1a23278b003349f",
+                "url": "https://api.github.com/repos/Rostick0/laravel-filters/zipball/6f9919040ecc692c6db25155bd04b1d729e94d92",
+                "reference": "6f9919040ecc692c6db25155bd04b1d729e94d92",
                 "shasum": ""
             },
             "require": {
@@ -4026,9 +4026,9 @@
             "homepage": "https://github.com/Rostick0/laravel-filters",
             "support": {
                 "issues": "https://github.com/Rostick0/laravel-filters/issues",
-                "source": "https://github.com/Rostick0/laravel-filters/tree/v1.0.5.2"
+                "source": "https://github.com/Rostick0/laravel-filters/tree/v1.0.6"
             },
-            "time": "2024-10-06T13:32:07+00:00"
+            "time": "2024-11-04T10:05:58+00:00"
         },
         {
             "name": "spatie/array-to-xml",
@@ -9422,12 +9422,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
