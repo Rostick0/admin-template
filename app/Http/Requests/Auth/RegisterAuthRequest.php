@@ -27,7 +27,7 @@ class RegisterAuthRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users,email|max:255',
-            'password' => 'required|min:6|max:255',
+            'password' => 'required|min:8|max:255',
             'code' => 'required|' . Rule::exists(EmailCode::class, 'code')
                 ->where('email', $this->email)
                 ->where('type', EmailCodeType::register->value),

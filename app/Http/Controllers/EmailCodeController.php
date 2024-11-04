@@ -13,12 +13,15 @@ class EmailCodeController extends Controller
 {
     public function store(StoreEmailCodeRequest $request)
     {
-        EmailCode::where('email', $request->email)->delete();
+        EmailCode::where([
+            ['email', '=', $request->email],
+            ['type', '=', $request->type]
+        ])->delete();
 
         $code = sprintf('%06d', rand(1, 1000000));
 
-        EmailCode::create([
-            'email' => $request->email,
+        $data = EmailCode::create([
+            ...$request->validated(),
             'code' => $code,
         ]);
 
