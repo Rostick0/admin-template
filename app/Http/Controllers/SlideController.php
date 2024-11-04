@@ -31,7 +31,7 @@ class SlideController extends ApiController
     {
         $where = [];
 
-        if (auth()->user()->role !== 'admin') {
+        if (auth()->user()?->role !== 'admin') {
             $where[] = ['is_show', '=', 1];
         }
 

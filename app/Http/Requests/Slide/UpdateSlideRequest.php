@@ -22,7 +22,8 @@ class UpdateSlideRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'link_name' => 'filled|max:255'
+            'title' => 'filled|max:255',
+            'link_name' => 'filled|max:255',
         ];
     }
 }

@@ -11,6 +11,7 @@ class Slide extends Model
     use HasFactory;
 
     protected $fillable = [
+        'title',
         'link_name',
         'is_show'
     ];

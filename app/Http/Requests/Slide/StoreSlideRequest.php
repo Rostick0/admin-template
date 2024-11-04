@@ -22,7 +22,8 @@ class StoreSlideRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'link_name' => 'required|max:255'
+            'title' => 'required|max:255',
+            'link_name' => 'required|max:255',
         ];
     }
 }
