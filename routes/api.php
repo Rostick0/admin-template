@@ -9,6 +9,7 @@ use App\Http\Controllers\EmailCodeController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\OrderingController;
 use App\Http\Controllers\OrderingProductController;
 use App\Http\Controllers\PostController;
@@ -80,6 +81,10 @@ Route::prefix('v1')
         Route::get('/user-statistics/orderings', [UserStatisticController::class, 'orderings']);
 
         Route::patch('/users/email-update', [UserController::class, 'updateEmail']);
+
+        Route::get('/notices', [NoticeController::class, 'index']);
+        Route::patch('/notices/all/read', [NoticeController::class, 'readAll']);
+        Route::patch('/notices/{id}/read', [NoticeController::class, 'read']);
 
         Route::apiResource('/email-code', EmailCodeController::class)->only(['store']);
 

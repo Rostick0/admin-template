@@ -3,63 +3,40 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notice;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class NoticeController extends Controller
+class NoticeController extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->model = new Notice;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function readAll(Request $request)
     {
-        //
+        $request->user()->notices->where([
+            ['read', '=', 0],
+        ])->update([
+            'read' => 1
+        ]);
+
+        return new JsonResponse([
+            'message' => 'Readed'
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function read(Request $request, int $id)
     {
-        //
-    }
+        $request->user()->notices->where([
+            ['id', '=', $id],
+            ['read', '=', 0],
+        ])->update([
+            'read' => 1
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Notice $notice)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Notice $notice)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Notice $notice)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Notice $notice)
-    {
-        //
+        return new JsonResponse([
+            'message' => 'Readed'
+        ]);
     }
 }

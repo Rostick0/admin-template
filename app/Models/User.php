@@ -80,4 +80,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Review::class)->limit(20);
     }
+
+    public function notices()
+    {
+        return $this->hasMany(Notice::class)->limit(20);
+    }
 }
