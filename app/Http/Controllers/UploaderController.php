@@ -24,7 +24,14 @@ class UploaderController extends Controller
         $model =  ('App\Models\\' . $request->model);
         $uploader = new ('App\Utils\Uploader\\' . $request->type);
 
-        DownloadJob::dispatch($model, $uploader, $request->toArray(), $request->user());
+        DownloadJob::dispatch(
+            $model,
+            $uploader,
+            $request->toArray(),
+            $request->user(),
+            [],
+            [['user_id', '=', $request->user()->id]]
+        );
 
         return new JsonResponse([
             'message' => 'Wait alert for install'

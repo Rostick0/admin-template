@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enum\AlertType;
 use App\Events\Notice as EventsNotice;
 use App\Models\Notice;
 use App\Models\Product;
@@ -62,6 +63,7 @@ class DownloadJob implements ShouldQueue
 
         $notice = Notice::create([
             'text' =>  'You have file ' . config()->get('app.url') . '/storage/' . $random_name,
+            'type' => AlertType::success->value,
             'user_id' => $this->user['id']
         ]);
 
@@ -75,6 +77,7 @@ class DownloadJob implements ShouldQueue
     {
         $notice = Notice::create([
             'text' =>  $e->getMessage(),
+            'type' => AlertType::error->value,
             'user_id' => $this->user['id']
         ]);
 
