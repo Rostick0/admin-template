@@ -14,6 +14,7 @@ class Notice extends Model
     protected $fillable = [
         'icon',
         'text',
+        'type',
         'is_read',
         'user_id',
         'date_publication',

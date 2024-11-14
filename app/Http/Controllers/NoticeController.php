@@ -15,10 +15,10 @@ class NoticeController extends ApiController
 
     public function readAll(Request $request)
     {
-        $request->user()->notices->where([
-            ['read', '=', 0],
+        $request->user()->notices()->where([
+            ['is_read', '=', 0],
         ])->update([
-            'read' => 1
+            'is_read' => 1
         ]);
 
         return new JsonResponse([
@@ -28,11 +28,11 @@ class NoticeController extends ApiController
 
     public function read(Request $request, int $id)
     {
-        $request->user()->notices->where([
+        $request->user()->notices()->where([
             ['id', '=', $id],
-            ['read', '=', 0],
+            ['is_read', '=', 0],
         ])->update([
-            'read' => 1
+            'is_read' => 1
         ]);
 
         return new JsonResponse([

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('icon')->nullable();
             $table->string('text')->nullable();
-            $table->enum('type', EnumFields::getColumn(AlertType::class));
+            $table->enum('type', EnumFields::getColumn(AlertType::class))->nullable();
             $table->boolean('is_read')->default(0);
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('notice_relat_id')->nullable();
