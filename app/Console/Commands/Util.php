@@ -38,7 +38,7 @@ class Util extends Command
         }
 
         $fullFilePath = $folder . '/' . $fileName . '.php';
-        $namespace = 'App\Utils\\' . str_replace('/', '\\',  $folderName);
+        $namespace = 'App\Utils' . ($folderName ? '\\' . str_replace('/', '\\',  $folderName) : '');
 
         $stub = <<<EOF
         <?php
@@ -57,6 +57,6 @@ class Util extends Command
         }
         file_put_contents($fullFilePath, $stub);
 
-        $this->info("Util file $fileName created successfully!");
+        $this->info("Util file $namespace\\$fileName created successfully!");
     }
 }

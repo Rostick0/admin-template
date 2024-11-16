@@ -24,6 +24,7 @@ use App\Http\Controllers\RubricController;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\StatisticDayController;
 use App\Http\Controllers\UploaderController;
+use App\Http\Controllers\UploadParseredController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserStatisticController;
 use App\Http\Controllers\VendorController;
@@ -87,6 +88,8 @@ Route::prefix('v1')
         Route::patch('/notices/{id}/read', [NoticeController::class, 'read']);
 
         Route::apiResource('/email-code', EmailCodeController::class)->only(['store']);
+
+        Route::post('/upload/parsered', [UploadParseredController::class, 'create']);
 
         Route::apiResources([
             'posts' => PostController::class,
