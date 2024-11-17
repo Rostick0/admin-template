@@ -34,7 +34,6 @@ class ReviewController extends ApiController
 
     public function store(Request $request)
     {
-        // dd($request->user()->reviews()->where('product_id', $request->product_id)->count());
         if ($request->user()->reviews()->where('product_id', $request->product_id)->count()) return AccessUtil::errorMessage('Review already exists', 400);
 
         return parent::store($request);

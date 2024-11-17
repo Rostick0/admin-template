@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enum\PropertyFieldType;
 use App\Enum\UploadParseredType;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -16,13 +17,13 @@ use App\Models\Product;
 use App\Models\Property;
 use App\Models\PropertyCategory;
 use App\Models\PropertyType;
+use App\Models\PropertyValue;
 use App\Models\Vendor;
 use App\Utils\ImageUploadUtil;
 use App\Utils\UploadParseredUtil;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Mockery\Expectation;
 
 function translit_sef($value)
 {
@@ -108,21 +109,32 @@ class UploadParseredJob implements ShouldQueue
 
                 foreach ($property_type['items'] as $property) {
                     if ($property['value'] === ShopParserType::absent->value) continue;
+
                     $unit = UploadParseredUtil::getType($property['value']);
+                    $value = UploadParseredUtil::getValue($property['value'], $unit);
+                    $type = UploadParseredUtil::setUnit($value);
 
                     $property_created = Property::firstOrCreate([
                         'name' => $property['name']
                     ], [
-                        'type' => UploadParseredUtil::setUnit($property),
-                        'unit' => $unit,
+                        'type' => $type,
+                        'unit' => PropertyFieldType::input->value === $type ? $unit : null,
                         'property_type_id' => $property_type_created->id,
                     ]);
+
+                    $property_value_id = null;
+                    if (PropertyFieldType::select->value === $property_created->type) {
+                        $property_value_id = PropertyValue::firstOrCreate([
+                            'value' => $property['value'],
+                            'property_id' => $property_created->id
+                        ])->id;
+                    }
 
                     PropertyCategory::firstOrCreate([
                         'property_id' => $property_created->id,
                         'category_id' => $category->id
                     ]);
-                    $product_properties[] = UploadParseredUtil::setPropertyValue($property_created, $property['value'], $unit);
+                    $product_properties[] = UploadParseredUtil::setPropertyValue($property_created, $value, $property_value_id);
                 }
             }
 

@@ -17,6 +17,7 @@ class Property extends Model
         'unit',
         'property_type_id',
         'is_top',
+        'is_filter',
     ];
 
     public function property_type(): BelongsTo
