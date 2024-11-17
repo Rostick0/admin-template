@@ -24,11 +24,11 @@ class UploadParseredUtil
         return PropertyFieldType::input->value;
     }
 
-    public static function setPropertyValue($property_created, $value)
+    public static function setPropertyValue($property_created, $value, $unit)
     {
         if (PropertyFieldType::select->value !== $property_created['type']) {
             return [
-                'value' => $value,
+                'value' => str_replace(" $unit", '', $value),
                 'property_id' => $property_created->id,
                 // 'property_value_id',
             ];

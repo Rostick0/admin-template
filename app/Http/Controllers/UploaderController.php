@@ -34,7 +34,7 @@ class UploaderController extends Controller
         );
 
         return new JsonResponse([
-            'message' => 'Wait alert for install'
+            'message' => 'Wait notice for install'
         ]);
     }
 

@@ -40,4 +40,9 @@ class Category extends Model
     {
         return $this->hasMany(Product::class)->limit(20);
     }
+
+    public function property_categories(): BelongsTo
+    {
+        return $this->belongsTo(PropertyCategory::class);
+    }
 }
