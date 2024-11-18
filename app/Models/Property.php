@@ -30,6 +30,11 @@ class Property extends Model
         return $this->hasMany(PropertyValue::class);
     }
 
+    public function product_properties(): HasMany
+    {
+        return $this->hasMany(ProductProperty::class);
+    }
+
     public function property_categories(): HasMany
     {
         return $this->hasMany(PropertyCategory::class);

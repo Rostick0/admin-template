@@ -27,12 +27,12 @@ class ImageUploadUtil
 
         // уменьшение размера фото, если оно больше, чем 1280 пикселей по ширине или высоте
         if ($width > 1280) {
-            $width =  1280;
+            $width = 1280;
             $image_temp->resize($width, null, function ($constraint) {
                 $constraint->aspectRatio();
             });
         } else if ($height > 1280) {
-            $height =  1280;
+            $height = 1280;
             $image_temp->resize(null, $height, function ($constraint) {
                 $constraint->aspectRatio();
             });
