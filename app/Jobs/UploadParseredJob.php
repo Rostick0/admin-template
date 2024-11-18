@@ -181,6 +181,7 @@ class UploadParseredJob implements ShouldQueue
 
     public function failed(\Exception $e = null)
     {
+        echo $e;
         DB::rollBack();
         Storage::delete($this->file_path);
         // dump($e);

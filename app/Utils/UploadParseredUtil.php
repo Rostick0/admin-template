@@ -20,7 +20,11 @@ class UploadParseredUtil
 
     public static function getValue($value, $unit = '')
     {
-        return trim(str_replace(" $unit", '', $value));
+        return trim(str_replace(
+            " $unit",
+            '',
+            explode(', ', $value)[0]
+        ));
     }
 
     public static function setUnit($value)
