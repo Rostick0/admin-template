@@ -25,6 +25,7 @@ services:
             - soketi
             - redis
             - rabbitmq
+            - elasticsearch
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
@@ -99,6 +100,19 @@ services:
             - sail
         depends_on:
             - laravel.test
+    elasticsearch: 
+        image: elasticsearch:8.11.1
+        # container_name: elasticsearch_container
+        ports:
+            - "${ELASTIC_PORT:-9200}:9200"
+        networks:
+            - sail
+        environment:
+          - http.host=0.0.0.0
+          - transport.host=127.0.0.1
+          - discovery.type=single-node # To run single node 
+          - xpack.security.enabled=false # To remove SSL complexity
+          - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
 networks:
     sail:
         driver: bridge

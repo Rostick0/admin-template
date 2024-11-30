@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
 
     protected $fillable = [
         'title',
@@ -31,6 +32,19 @@ class Product extends Model
     ];
 
     protected $appends = ['main_image'];
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => (int) $this->id,
+            'title' => $this->title,
+            'description' => $this->description,
+            'price' => (float) $this->price,
+            'created_at' => $this->created_at->timestamp,
+            'category' => $this->category->name,
+            'vendor' => $this->vendor->name,
+        ];
+    }
 
     public function files(): MorphMany
     {
