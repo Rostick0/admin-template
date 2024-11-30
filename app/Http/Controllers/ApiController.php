@@ -11,12 +11,23 @@ use Rostislav\LaravelFilters\Filter;
 class ApiController extends Controller
 {
     protected $model;
+    // Привязка связи к пользователю
     protected $is_auth_id = false;
+    // Название поля атрибута связи юзера
     protected $string_user_id = 'user_id';
+    // По каким полям запрещен поиск
     protected $fillable_block = [];
     protected $store_request;
     protected $update_request;
+    // Поиск по связанным таблицам
+    // Пример поиска по товарам и связям категории и производителя
+    // [
+    //     ['title', 'LIKE'],
+    //     ['name', 'LIKE', 'category'],
+    //     ['name', 'LIKE', 'vendor'],
+    // ]
     protected $q_request = [];
+
 
     public function __construct(Model $model)
     {
@@ -26,6 +37,7 @@ class ApiController extends Controller
     // добавление или изменение зависимых данных
     protected static function extendsMutation($data, $request) {}
 
+    // добавление правил для отображения данных при использовании index и show 
     protected static function getWhere(Request $request = null)
     {
         return [];

@@ -17,9 +17,8 @@ class AuthCode extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        protected $code
-    ) {
-    }
+        protected string|int $code
+    ) {}
 
     /**
      * Get the message envelope.
