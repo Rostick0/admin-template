@@ -20,7 +20,6 @@ use Rostislav\LaravelFilters\Filters\OrderByUtil;
 use Rostislav\LaravelFilters\Filters\QueryWith;
 use Illuminate\Database\Eloquent\Builder;
 
-
 class ProductController extends ApiController
 {
     public function __construct()
@@ -32,7 +31,7 @@ class ProductController extends ApiController
         $this->q_request = [
             ['title', 'LIKE'],
             ['name', 'LIKE', 'category'],
-            ['name', 'LIKE', 'vendor'],
+            // ['name', 'LIKE', 'vendor'],
         ];
     }
 
@@ -85,41 +84,21 @@ class ProductController extends ApiController
 
     public function index(Request $request)
     {
+
         $data = $this->model->search($request->search)
-            // ->query(fn(Builder $query) => $query->whereHas(
-            //     'category',
-            //     function (Builder $builder) {
-            //         $builder->where('id', 4);
-            //     }
-            // ))
-            ->query(
-                function (Builder $query) use ($request) {
-                    if (isset($request['extends'])) {
-                        $query = $query->with(QueryString::convertToArray($request['extends']));
-                    }
-
-                    if (isset($request['doesntHave'])) {
-                        foreach (QueryString::convertToArray($request['doesntHave']) as $doesntHaveitem) {
-                            $query = $query->doesntHave($doesntHaveitem);
-                        }
-                    }
-
-                    $query = FilterRequestUtil::all($request, $query, $this->fillable_block);
-                    $query = FilterHasRequestUtil::all($request, $query, $this->fillable_block);
-                    $query = FilterHasUtil::all($request, $query, $this->fillable_block);
-                    $query = FilterSomeRequestUtil::all($request, $query, $this->fillable_block);
-
-
-                    if (isset($request['sort'])) $query = OrderByUtil::set($request['sort'], $query);
-                    if (isset($request['extendsCount'])) {
-                        $query = $query?->withCount(QueryString::convertToArray($request['extendsCount']));
-                        $query = QueryWith::setSum($request, $query);
-                    }
-
-                    // if (self::getWhere($request)) $query = Filter::where($query, $where);
+            ->query(function (Builder $query) use ($request) {
+                if (isset($request['extends'])) {
+                    $query = $query->with(QueryString::convertToArray($request['extends']));
                 }
-            );
 
+                if (isset($request['doesntHave'])) {
+                    foreach (QueryString::convertToArray($request['doesntHave']) as $doesntHaveitem) {
+                        $query = $query->doesntHave($doesntHaveitem);
+                    }
+                }
+
+                $query = Filter::query($request, $query->getQuery(), $this->fillable_block, $this->getWhere($request));
+            });
 
         return new JsonResponse($data->paginate($request->limit ?? 20));
     }
