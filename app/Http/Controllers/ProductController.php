@@ -18,6 +18,8 @@ use Rostislav\LaravelFilters\Filters\FilterRequestUtil;
 use Rostislav\LaravelFilters\Filters\FilterSomeRequestUtil;
 use Rostislav\LaravelFilters\Filters\OrderByUtil;
 use Rostislav\LaravelFilters\Filters\QueryWith;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class ProductController extends ApiController
 {
@@ -83,31 +85,41 @@ class ProductController extends ApiController
 
     public function index(Request $request)
     {
-        $data = $this->model->search($request->search);
+        $data = $this->model->search($request->search)
+            // ->query(fn(Builder $query) => $query->whereHas(
+            //     'category',
+            //     function (Builder $builder) {
+            //         $builder->where('id', 4);
+            //     }
+            // ))
+            ->query(
+                function (Builder $query) use ($request) {
+                    if (isset($request['extends'])) {
+                        $query = $query->with(QueryString::convertToArray($request['extends']));
+                    }
 
-        if (isset($request['extends'])) {
-            $data = $data->query(fn($query) => $query->with(QueryString::convertToArray($request['extends'])));
-        }
+                    if (isset($request['doesntHave'])) {
+                        foreach (QueryString::convertToArray($request['doesntHave']) as $doesntHaveitem) {
+                            $query = $query->doesntHave($doesntHaveitem);
+                        }
+                    }
 
-        if (isset($request['doesntHave'])) {
-            foreach (QueryString::convertToArray($request['doesntHave']) as $doesntHaveitem) {
-                $data = $data->query(fn($query) => $query->doesntHave($doesntHaveitem));
-            }
-        }
+                    $query = FilterRequestUtil::all($request, $query, $this->fillable_block);
+                    $query = FilterHasRequestUtil::all($request, $query, $this->fillable_block);
+                    $query = FilterHasUtil::all($request, $query, $this->fillable_block);
+                    $query = FilterSomeRequestUtil::all($request, $query, $this->fillable_block);
 
-        // $data = FilterRequestUtil::all($request, $data, $this->fillable_block);
-        // $data = FilterHasRequestUtil::all($request, $data, $this->fillable_block);
-        // $data = FilterHasUtil::all($request, $data, $this->fillable_block);
-        // $data = FilterSomeRequestUtil::all($request, $data, $this->fillable_block);
-        if (isset($request['sort'])) $data = OrderByUtil::set($request['sort'], $data);
-        // if (isset($request['extendsCount'])) {
-        //     // $data = $data?->withCount(QueryString::convertToArray($request['extendsCount']));
-        //     $data = QueryWith::setSum($request, $data);
-        // }
 
-        // if (self::getWhere($request)) $data = Filter::where($data, $where);
+                    if (isset($request['sort'])) $query = OrderByUtil::set($request['sort'], $query);
+                    if (isset($request['extendsCount'])) {
+                        $query = $query?->withCount(QueryString::convertToArray($request['extendsCount']));
+                        $query = QueryWith::setSum($request, $query);
+                    }
 
-        // return $data;
+                    // if (self::getWhere($request)) $query = Filter::where($query, $where);
+                }
+            );
+
 
         return new JsonResponse($data->paginate($request->limit ?? 20));
     }
