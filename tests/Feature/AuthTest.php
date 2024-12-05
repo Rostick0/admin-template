@@ -57,7 +57,7 @@ class AuthTest extends TestCase
     }
 
     public function test_auth_me(): void
-    {;
+    {
         User::create($this->request_data);
 
         $token = JWTAuth::attempt($this->request_data);

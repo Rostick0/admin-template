@@ -85,20 +85,22 @@ class ProductController extends ApiController
     public function index(Request $request)
     {
 
-        $data = $this->model->search($request->search)
-            ->query(function (Builder $query) use ($request) {
-                if (isset($request['extends'])) {
-                    $query = $query->with(QueryString::convertToArray($request['extends']));
-                }
+        // $data = $this->model->search($request->search)
+        //     ->query(function (Builder $query) use ($request) {
+        //         if (isset($request['extends'])) {
+        //             $query = $query->with(QueryString::convertToArray($request['extends']));
+        //         }
 
-                if (isset($request['doesntHave'])) {
-                    foreach (QueryString::convertToArray($request['doesntHave']) as $doesntHaveitem) {
-                        $query = $query->doesntHave($doesntHaveitem);
-                    }
-                }
+        //         if (isset($request['doesntHave'])) {
+        //             foreach (QueryString::convertToArray($request['doesntHave']) as $doesntHaveitem) {
+        //                 $query = $query->doesntHave($doesntHaveitem);
+        //             }
+        //         }
 
-                $query = Filter::query($request, $query->getQuery(), $this->fillable_block, $this->getWhere($request));
-            });
+        //         $query = Filter::query($request, $query->getQuery(), $this->fillable_block, $this->getWhere($request));
+        //     });
+
+        $data = Filter::query($request, new Product());
 
         return new JsonResponse($data->paginate($request->limit ?? 20));
     }

@@ -52,7 +52,7 @@ class User extends Authenticatable implements JWTSubject
     protected function email(): Attribute
     {
         return Attribute::make(
-            set: fn(string $value) => strtoupper($value)
+            set: fn(string $value) => strtolower($value)
         );
     }
 

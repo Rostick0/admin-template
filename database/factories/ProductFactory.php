@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use App\Models\Vendor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -26,9 +28,9 @@ class ProductFactory extends Factory
             'is_infinitely'=> random_int(0, 1),
             'raiting' => (random_int(300, 500) / 100),
             'views' => random_int(0, 500),
-            'user_id' => 1,
+            'user_id' => User::first()->id,
             'category_id' => random_int(1, 4),
-            'vendor_id' => random_int(1, 10),
+            'vendor_id' => (Vendor::count() > 5 ? Vendor::inRandomOrder()->first(['id']) : Vendor::factory()->create())->id,
         ];
     }
 }
