@@ -16,7 +16,7 @@ class UploadParseredController extends Controller
     function create(CreateUploadParsered $request)
     {
         $file = $request->file('file');
-        $random_name_with_extension = FileUploadUtil::make($file);
+        $random_name_with_extension = 'public/' . FileUploadUtil::make($file);
 
         UploadParseredJob::dispatch(
             $random_name_with_extension,

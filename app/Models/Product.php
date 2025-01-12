@@ -14,7 +14,8 @@ use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes, Searchable;
+    use HasFactory, SoftDeletes;
+    // use HasFactory, SoftDeletes, Searchable;
 
     protected $fillable = [
         'title',

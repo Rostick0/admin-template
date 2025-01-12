@@ -154,25 +154,25 @@ class UploadParseredJob implements ShouldQueue
 
             $product->product_properties()->createMany($product_properties);
 
-            if ($item['images']) {
-                $images = [];
-                foreach ($item['images'] as $image) {
-                    [$random_name, $width, $height] = ImageUploadUtil::make($image);
+            // if ($item['images']) {
+            //     $images = [];
+            //     foreach ($item['images'] as $image) {
+            //         [$random_name, $width, $height] = ImageUploadUtil::make($image);
 
-                    $image = Image::create([
-                        'name' =>  basename(strtok($image, '?')),
-                        'width' => $width,
-                        'height' => $height,
-                        'path' => config()->get('app.url') . '/storage-custom/' . $random_name . 'jpeg',
-                        'path_webp' => config()->get('app.url') . '/storage-custom/' . $random_name . 'webp',
-                        'user_id' => 1,
-                    ]);
+            //         $image = Image::create([
+            //             'name' =>  basename(strtok($image, '?')),
+            //             'width' => $width,
+            //             'height' => $height,
+            //             'path' => config()->get('app.url') . '/storage-custom/' . $random_name . 'jpeg',
+            //             'path_webp' => config()->get('app.url') . '/storage-custom/' . $random_name . 'webp',
+            //             'user_id' => 1,
+            //         ]);
 
-                    $images[] = ['image_id' => $image->id];
-                }
+            //         $images[] = ['image_id' => $image->id];
+            //     }
 
-                $product->images()->createMany($images);
-            }
+            //     $product->images()->createMany($images);
+            // }
         }
 
         DB::commit();

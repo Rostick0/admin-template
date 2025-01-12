@@ -34,9 +34,9 @@ class DatabaseSeeder extends Seeder
             ->has(ImageRelat::factory(1), 'images')
             ->create();
 
-        Product::factory(500)
-            ->has(ImageRelat::factory(5), 'images')
-            ->create();
+        // Product::factory(500)
+        //     ->has(ImageRelat::factory(5), 'images')
+        //     ->create();
 
         // \App\Models\User::factory(10)->create();
 
